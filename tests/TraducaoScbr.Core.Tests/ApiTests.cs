@@ -43,6 +43,23 @@ public class PublicationTests
     }
 
     [Fact]
+    public void ReadsTheExampleOfTheFinalContract()
+    {
+        // O exemplo mandado pela sessão do site: data com milissegundos em UTC e os canais além de LIVE e PTU.
+        var json = $$"""
+            { "versao": "4.10.3", "canal": "TECH-PREVIEW", "build": 13055118, "publicadaEm": "2026-11-05T12:00:00.000Z",
+              "tamanho": 11328092, "sha256": "{{Sha}}", "arquivo": "https://scbr.space/api/traducao/arquivo/abc",
+              "pagina": "https://scbr.space/traducao" }
+            """;
+
+        var p = Publication.Parse(json, Api);
+
+        Assert.Equal(new DateTimeOffset(2026, 11, 5, 12, 0, 0, TimeSpan.Zero), p.PublishedAt);
+        Assert.Equal("4.10.3 TECH-PREVIEW (build 13055118)", p.Description);
+        Assert.Equal(11328092, p.Size);
+    }
+
+    [Fact]
     public void ChannelAndBuildMayBeNull()
     {
         // O contrato final deixa o canal e o build nulos quando a rodada não tem a versão do jogo.

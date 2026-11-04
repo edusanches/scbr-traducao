@@ -27,7 +27,10 @@ var port = args.Length > 1 ? int.Parse(args[1]) : 5199;
 var builder = WebApplication.CreateBuilder();
 builder.Logging.SetMinimumLevel(LogLevel.Warning);
 builder.WebHost.UseUrls($"http://localhost:{port}");
+// Como o site: o arquivo vai em gzip quando o pedido aceita (o app descompacta e confere o arquivo aberto).
+builder.Services.AddResponseCompression();
 var app = builder.Build();
+app.UseResponseCompression();
 
 app.MapGet("/api/traducao/atual", () =>
 {
