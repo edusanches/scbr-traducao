@@ -207,6 +207,8 @@ public sealed class MainViewModel : Observable
     private string _overallText = "Conferindo…";
     private string _overallBrush = "TintaSuave";
     private bool _overallAlert;
+    private bool _canInstall = true;
+    private string? _waitingText;
 
     public ObservableCollection<ChannelViewModel> Channels { get; } = [];
 
@@ -336,6 +338,8 @@ public sealed class MainViewModel : Observable
             if (Set(ref _selectedChannel, value))
             {
                 Notify(nameof(HasSelectedChannel));
+                Notify(nameof(ShowAction));
+                Notify(nameof(ShowWaiting));
             }
 
             if (value is not null)
@@ -346,6 +350,14 @@ public sealed class MainViewModel : Observable
     }
 
     public bool HasSelectedChannel => _selectedChannel is not null;
+
+    /// <summary>O botão grande aparece quando o canal tem o que fazer e há uma tradução publicada para instalar.</summary>
+    public bool ShowAction => _selectedChannel?.HasPrimaryAction == true && _canInstall;
+
+    /// <summary>Sem publicação (ou sem resposta do site), no lugar do botão fica o aviso de espera.</summary>
+    public bool ShowWaiting => _selectedChannel?.HasPrimaryAction == true && !_canInstall;
+
+    public string? WaitingText { get => _waitingText; private set => Set(ref _waitingText, value); }
 
     public bool TabTraducao { get => _tab == "traducao"; set => SetTab(value, "traducao"); }
 
@@ -384,7 +396,7 @@ public sealed class MainViewModel : Observable
         {
             PublicationTitle = "Ainda não há tradução publicada";
             PublicationBuild = null;
-            PublicationDate = "Quando a equipe de tradução publicar, o app avisa e instala.";
+            PublicationDate = "Quando a equipe de tradução publicar, ela aparece aqui para instalar.";
             Page = null;
         }
         else if (service.ApiError is not null)
@@ -432,10 +444,20 @@ public sealed class MainViewModel : Observable
             ?? Channels.FirstOrDefault(c => c.State.Wanted)
             ?? Channels.FirstOrDefault();
 
+        _canInstall = current is not null;
+        WaitingText = current is not null
+            ? null
+            : service.NothingPublished
+                ? "A equipe de tradução ainda não publicou a tradução no scbr.space. O app confere de novo a cada 3 horas."
+                : "Sem resposta do scbr.space agora. O app tenta de novo a cada 3 horas.";
+        Notify(nameof(ShowAction));
+        Notify(nameof(ShowWaiting));
+
         var wanted = service.Channels.Where(c => c.Wanted).ToList();
         (OverallText, _overallBrush, OverallAlert) = true switch
         {
             _ when service.ApiError is not null && current is null => ("Sem resposta do scbr.space", "TintaSuave", false),
+            _ when current is null && wanted.Count > 0 => ("Tradução instalada", "TintaSuave", false),
             _ when wanted.Any(c => c.Status is ChannelStatus.Outdated or ChannelStatus.NotInstalled) => ("Tradução nova para instalar", "Aviso", true),
             _ when wanted.Any(c => c.GameAhead) => ("Jogo mais novo que a tradução", "Aviso", true),
             _ when wanted.Count > 0 => ("Tradução em dia", "Positivo", false),

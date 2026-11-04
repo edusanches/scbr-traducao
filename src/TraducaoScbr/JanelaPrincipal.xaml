@@ -216,13 +216,24 @@
               </Border>
 
               <Button Style="{StaticResource BotaoLauncher}" Margin="0,16,0,0" Click="Instalar_Click" IsEnabled="{Binding Idle}"
-                      Visibility="{Binding SelectedChannel.HasPrimaryAction, Converter={StaticResource Visivel}}"
+                      Visibility="{Binding ShowAction, Converter={StaticResource Visivel}}"
                       AutomationProperties.Name="{Binding SelectedChannel.PrimaryActionName}">
                 <StackPanel Orientation="Horizontal">
                   <TextBlock Style="{StaticResource Icone}" Text="{Binding SelectedChannel.ActionGlyph}" FontSize="17" />
                   <TextBlock Text="{Binding SelectedChannel.ActionText}" Margin="12,0,0,1" VerticalAlignment="Center" />
                 </StackPanel>
               </Button>
+              <StackPanel Margin="0,16,0,0" Visibility="{Binding ShowWaiting, Converter={StaticResource Visivel}}">
+                <local:Chanfro MinHeight="52" BorderThickness="2" Cut="14" Padding="18,6"
+                               BorderBrush="{StaticResource LauncherBorda}" Background="#33091726">
+                  <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource Icone}" Text="&#xE823;" FontSize="17" Foreground="{StaticResource LauncherTextoClaro}" />
+                    <TextBlock Text="AGUARDANDO A PUBLICAÇÃO" FontFamily="{StaticResource FonteLauncher}" FontSize="17"
+                               Foreground="{StaticResource LauncherTextoClaro}" Margin="12,0,0,1" VerticalAlignment="Center" />
+                  </StackPanel>
+                </local:Chanfro>
+                <TextBlock Text="{Binding WaitingText}" FontSize="12.5" Foreground="{StaticResource LauncherTextoSuave}" Margin="0,8,0,0" TextWrapping="Wrap" />
+              </StackPanel>
               <local:Chanfro Margin="0,16,0,0" MinHeight="52" BorderThickness="2" Cut="14" Padding="18,6"
                              BorderBrush="{StaticResource Positivo}" Background="#1A22C96B"
                              Visibility="{Binding SelectedChannel.HasStatusBlock, Converter={StaticResource Visivel}}">

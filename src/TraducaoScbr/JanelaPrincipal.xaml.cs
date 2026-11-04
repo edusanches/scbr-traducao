@@ -173,7 +173,8 @@ public partial class JanelaPrincipal : Window
     private void AbrirPagina_Click(object sender, RoutedEventArgs e) =>
         Open(ViewModel.Page?.AbsoluteUri ?? "https://scbr.space/traducao");
 
-    private void AbrirPaginaTraducao_Click(object sender, RoutedEventArgs e) => Open("https://scbr.space/traducao");
+    private void AbrirPaginaTraducao_Click(object sender, RoutedEventArgs e) =>
+        Open(ViewModel.Page?.AbsoluteUri ?? (_app.Service.NothingPublished ? "https://scbr.space" : "https://scbr.space/traducao"));
 
     private void AbrirSite_Click(object sender, RoutedEventArgs e) => Open("https://scbr.space");
 
