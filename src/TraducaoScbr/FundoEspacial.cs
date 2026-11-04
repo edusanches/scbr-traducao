@@ -11,6 +11,13 @@ public sealed class FundoEspacial : FrameworkElement
 {
     private static readonly (double X, double Y, double Size, double Alpha)[] Stars = MakeStars();
 
+    public FundoEspacial()
+    {
+        // Sem isso, a nebulosa desenhada além da borda de cima cobria a barra do topo e pegava o clique dos botões.
+        ClipToBounds = true;
+        IsHitTestVisible = false;
+    }
+
     private static readonly Brush Base = Frozen(new LinearGradientBrush(
         new GradientStopCollection
         {

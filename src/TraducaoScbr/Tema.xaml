@@ -241,8 +241,6 @@
 
   <SolidColorBrush x:Key="LauncherBarra" Color="#FF0A1520" />
   <SolidColorBrush x:Key="LauncherBarraLinha" Color="#FF16283A" />
-  <SolidColorBrush x:Key="LauncherTrilho" Color="#F0071019" />
-  <SolidColorBrush x:Key="LauncherSelecao" Color="#FF15304A" />
   <SolidColorBrush x:Key="LauncherPainel" Color="#E00B1A2A" />
   <SolidColorBrush x:Key="LauncherCampo" Color="#D9091726" />
   <SolidColorBrush x:Key="LauncherBorda" Color="#FF1F4467" />
