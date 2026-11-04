@@ -48,12 +48,11 @@
             <ColumnDefinition Width="Auto" />
           </Grid.ColumnDefinitions>
 
-          <Button x:Name="Marca" Style="{StaticResource BotaoBarra}" Padding="16,0,14,0" Click="Marca_Click"
-                  AutomationProperties.Name="Menu da SCBR">
+          <Button x:Name="Marca" Style="{StaticResource BotaoBarra}" Padding="0,0,14,0" Click="Marca_Click"
+                  AutomationProperties.Name="Menu da Star Citizen Brasil" ToolTip="Star Citizen Brasil">
             <StackPanel Orientation="Horizontal">
-              <Image Source="{StaticResource Simbolo}" Width="24" Height="24" VerticalAlignment="Center" />
-              <TextBlock Text="SCBR" FontFamily="{StaticResource FonteMarca}" FontSize="19" Margin="9,0,0,1" VerticalAlignment="Center" />
-              <TextBlock Style="{StaticResource Icone}" Text="&#xE70D;" FontSize="10" Margin="8,3,0,0" />
+              <Image Source="{StaticResource MarcaCabecalho}" Height="47" Stretch="Uniform" VerticalAlignment="Top" />
+              <TextBlock Style="{StaticResource Icone}" Text="&#xE70D;" FontSize="10" Margin="6,2,0,0" />
             </StackPanel>
             <Button.ContextMenu>
               <ContextMenu>
@@ -110,17 +109,16 @@
             <RowDefinition Height="Auto" />
           </Grid.RowDefinitions>
 
-          <!-- O título no meio, no lugar do logo do jogo. -->
+          <!-- O logo do site no meio, no lugar do logo do jogo: a marca do cabeçalho e o nome, como no scbr.space. -->
           <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,6,0,0"
-                      AutomationProperties.Name="Tradução SCBR: Star Citizen em português">
+                      AutomationProperties.Name="Star Citizen Brasil: tradução PT-BR da comunidade">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-              <Image Source="{StaticResource Simbolo}" Width="64" Height="64" VerticalAlignment="Center" />
-              <TextBlock Text="T&#x2009;R&#x2009;A&#x2009;D&#x2009;U&#x2009;Ç&#x2009;Ã&#x2009;O&#x2009; &#x2009;S&#x2009;C&#x2009;B&#x2009;R"
-                         FontFamily="{StaticResource FonteMarca}" FontSize="44" Margin="20,0,0,4" VerticalAlignment="Center" />
+              <Image Source="{StaticResource MarcaCabecalho}" Height="74" Stretch="Uniform" VerticalAlignment="Center" />
+              <Image Source="{StaticResource NomeDoSite}" Height="33" Stretch="Uniform" Margin="26,0,0,0" VerticalAlignment="Center" />
             </StackPanel>
-            <TextBlock Text="S&#x2009;T&#x2009;A&#x2009;R&#x2009; &#x2009;C&#x2009;I&#x2009;T&#x2009;I&#x2009;Z&#x2009;E&#x2009;N&#x2009; &#x2009;E&#x2009;M&#x2009; &#x2009;P&#x2009;O&#x2009;R&#x2009;T&#x2009;U&#x2009;G&#x2009;U&#x2009;Ê&#x2009;S"
+            <TextBlock Text="T&#x2009;R&#x2009;A&#x2009;D&#x2009;U&#x2009;Ç&#x2009;Ã&#x2009;O&#x2009; &#x2009;P&#x2009;T&#x2009;-&#x2009;B&#x2009;R&#x2009; &#x2009;D&#x2009;A&#x2009; &#x2009;C&#x2009;O&#x2009;M&#x2009;U&#x2009;N&#x2009;I&#x2009;D&#x2009;A&#x2009;D&#x2009;E"
                        FontFamily="{StaticResource FonteUi}" FontSize="13" Foreground="{StaticResource Acento}"
-                       HorizontalAlignment="Center" Margin="84,4,0,0" />
+                       HorizontalAlignment="Center" Margin="100,14,0,0" />
           </StackPanel>
 
           <Grid Grid.Row="1" Margin="64,0,48,34">
