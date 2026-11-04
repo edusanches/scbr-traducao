@@ -1,0 +1,16 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <!-- A versão do app. O MSIX usa a mesma, com um .0 no fim (a loja pede o último número zerado). -->
+    <Version>1.0.0</Version>
+    <Company>Star Citizen Brasil</Company>
+    <Product>Tradução SCBR</Product>
+    <Copyright>Comunidade Star Citizen Brasil (scbr.space)</Copyright>
+    <NeutralLanguage>pt-BR</NeutralLanguage>
+    <SatelliteResourceLanguages>pt-BR</SatelliteResourceLanguages>
+  </PropertyGroup>
+</Project>

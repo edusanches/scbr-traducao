@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  O manifesto do pacote MSIX. O build-msix.ps1 troca os __CAMPOS__ pelos valores da identidade:
+  os de teste, por padrão, ou os do Partner Center (Gerenciamento do produto > Identidade do produto) para a loja.
+-->
+<Package
+  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
+  xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  IgnorableNamespaces="uap desktop rescap">
+
+  <Identity
+    Name="__IDENTITY_NAME__"
+    Publisher="__PUBLISHER__"
+    Version="__VERSION__"
+    ProcessorArchitecture="x64" />
+
+  <Properties>
+    <DisplayName>Tradução SCBR</DisplayName>
+    <PublisherDisplayName>__PUBLISHER_DISPLAY_NAME__</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+    <Description>Instala e mantém atualizada a tradução PT-BR da comunidade para Star Citizen.</Description>
+  </Properties>
+
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.19041.0" MaxVersionTested="10.0.26100.0" />
+  </Dependencies>
+
+  <Resources>
+    <Resource Language="pt-BR" />
+  </Resources>
+
+  <Applications>
+    <Application Id="TraducaoSCBR" Executable="TraducaoSCBR.exe" EntryPoint="Windows.FullTrustApplication">
+      <uap:VisualElements
+        DisplayName="Tradução SCBR"
+        Description="Instala e mantém atualizada a tradução PT-BR da comunidade para Star Citizen."
+        BackgroundColor="transparent"
+        Square150x150Logo="Assets\Square150x150Logo.png"
+        Square44x44Logo="Assets\Square44x44Logo.png">
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square71x71Logo="Assets\SmallTile.png" Square310x310Logo="Assets\LargeTile.png" />
+      </uap:VisualElements>
+      <Extensions>
+        <!-- O início com o Windows, que o app liga na primeira vez e a pessoa desliga quando quiser. -->
+        <desktop:Extension Category="windows.startupTask" Executable="TraducaoSCBR.exe" EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask TaskId="TraducaoScbrAoIniciar" Enabled="false" DisplayName="Tradução SCBR" />
+        </desktop:Extension>
+      </Extensions>
+    </Application>
+  </Applications>
+
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <!-- App de desktop (WPF): precisa gravar na pasta do jogo, fora do pacote. -->
+    <rescap:Capability Name="runFullTrust" />
+  </Capabilities>
+</Package>
