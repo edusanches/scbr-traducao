@@ -134,3 +134,8 @@ O GitHub Actions (`windows-latest`) compila, roda os testes e gera o MSIX a cada
 pacote fica como artefato do workflow (`TraducaoSCBR-msix`). Com as variáveis do repositório `LOJA_IDENTITY_NAME`,
 `LOJA_PUBLISHER` e `LOJA_PUBLISHER_DISPLAY_NAME` (os valores da identidade na loja, que não são segredo), o pacote do
 CI já sai pronto para o envio.
+
+## Licença
+
+[MIT](LICENSE). Os ícones saem do símbolo da Star Citizen Brasil, que é da comunidade de fãs. Star Citizen® é marca
+registrada da Cloud Imperium Rights LLC; este app não tem vínculo com a Cloud Imperium Games.
