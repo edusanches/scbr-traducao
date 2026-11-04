@@ -58,6 +58,7 @@ public sealed class ChannelViewModel : Observable
 {
     private string? _error;
     private string? _progress;
+    private bool _selected;
 
     public ChannelViewModel(ChannelState state)
     {
@@ -104,6 +105,41 @@ public sealed class ChannelViewModel : Observable
     public string? PrimaryAction { get; }
 
     public bool HasPrimaryAction => PrimaryAction is not null;
+
+    /// <summary>O texto do botão grande, em caixa alta, como o "LAUNCH GAME" do launcher.</summary>
+    public string? ActionText => PrimaryAction is null ? null : $"{PrimaryAction.ToUpperInvariant()} TRADUÇÃO";
+
+    /// <summary>O ícone do botão grande (Segoe Fluent Icons): baixar, sincronizar ou marcar.</summary>
+    public string ActionGlyph => Glyph(PrimaryAction switch
+    {
+        "Atualizar" => 0xE895,
+        "Ativar" => 0xE73E,
+        _ => 0xE896,
+    });
+
+    /// <summary>No lugar do botão, quando não há o que fazer: "TRADUÇÃO EM DIA".</summary>
+    public string? StatusBlockText => State.Status switch
+    {
+        ChannelStatus.UpToDate => "TRADUÇÃO EM DIA",
+        ChannelStatus.Unknown => "TRADUÇÃO INSTALADA",
+        _ => null,
+    };
+
+    public bool HasStatusBlock => StatusBlockText is not null;
+
+    /// <summary>"build 12913470", embaixo do nome do canal no seletor.</summary>
+    public string BuildLine => State.Channel.Build is { } build ? $"build {build.ChangeNumber}" : "build desconhecido";
+
+    /// <summary>A linha do canal no menu do seletor.</summary>
+    public string MenuLabel => $"{Name}   ·   {BuildLine}   ·   {StatusText}";
+
+    public bool IsSelected
+    {
+        get => _selected;
+        set => Set(ref _selected, value);
+    }
+
+    private static string Glyph(int code) => char.ConvertFromUtf32(code);
 
     // Os nomes dos botões para leitores de tela (e para os testes de interface): "Instalar a tradução no LIVE".
     public string PrimaryActionName => $"{PrimaryAction} a tradução no {Name}";
@@ -166,6 +202,11 @@ public sealed class MainViewModel : Observable
     private string? _startupNote;
     private bool _scanned;
     private bool _syncing;
+    private ChannelViewModel? _selectedChannel;
+    private string _tab = "traducao";
+    private string _overallText = "Conferindo…";
+    private string _overallBrush = "TintaSuave";
+    private bool _overallAlert;
 
     public ObservableCollection<ChannelViewModel> Channels { get; } = [];
 
@@ -279,6 +320,51 @@ public sealed class MainViewModel : Observable
 
     public bool NoChannels => _scanned && Channels.Count == 0;
 
+    public bool Loading => !_scanned;
+
+    /// <summary>O canal do seletor ("Canal do jogo"), em que o botão grande age.</summary>
+    public ChannelViewModel? SelectedChannel
+    {
+        get => _selectedChannel;
+        set
+        {
+            if (_selectedChannel is not null)
+            {
+                _selectedChannel.IsSelected = false;
+            }
+
+            if (Set(ref _selectedChannel, value))
+            {
+                Notify(nameof(HasSelectedChannel));
+            }
+
+            if (value is not null)
+            {
+                value.IsSelected = true;
+            }
+        }
+    }
+
+    public bool HasSelectedChannel => _selectedChannel is not null;
+
+    public bool TabTraducao { get => _tab == "traducao"; set => SetTab(value, "traducao"); }
+
+    public bool TabCanais { get => _tab == "canais"; set => SetTab(value, "canais"); }
+
+    public bool TabOpcoes { get => _tab == "opcoes"; set => SetTab(value, "opcoes"); }
+
+    public bool TabAjuda { get => _tab == "ajuda"; set => SetTab(value, "ajuda"); }
+
+    /// <summary>O estado de tudo, na barra do topo e na dica da bandeja: "Tradução em dia".</summary>
+    public string OverallText { get => _overallText; private set => Set(ref _overallText, value); }
+
+    public Brush OverallColor => (Brush)System.Windows.Application.Current.FindResource(_overallBrush);
+
+    /// <summary>Se a bandeja mostra o ponto de aviso.</summary>
+    public bool OverallAlert { get => _overallAlert; private set => Set(ref _overallAlert, value); }
+
+    public string AppVersionShort { get; } = AppInfo.Version;
+
     public bool HasChannels => Channels.Count > 0;
 
     public string AppVersion { get; } = $"Versão {AppInfo.Version}";
@@ -340,11 +426,47 @@ public sealed class MainViewModel : Observable
             Channels.Add(vm);
         }
 
+        // O seletor fica no canal que estava; senão, no primeiro com a tradução, ou no primeiro.
+        var selectedPath = _selectedChannel?.Path;
+        SelectedChannel = Channels.FirstOrDefault(c => string.Equals(c.Path, selectedPath, StringComparison.OrdinalIgnoreCase))
+            ?? Channels.FirstOrDefault(c => c.State.Wanted)
+            ?? Channels.FirstOrDefault();
+
+        var wanted = service.Channels.Where(c => c.Wanted).ToList();
+        (OverallText, _overallBrush, OverallAlert) = true switch
+        {
+            _ when service.ApiError is not null && current is null => ("Sem resposta do scbr.space", "TintaSuave", false),
+            _ when wanted.Any(c => c.Status is ChannelStatus.Outdated or ChannelStatus.NotInstalled) => ("Tradução nova para instalar", "Aviso", true),
+            _ when wanted.Any(c => c.GameAhead) => ("Jogo mais novo que a tradução", "Aviso", true),
+            _ when wanted.Count > 0 => ("Tradução em dia", "Positivo", false),
+            _ when service.NothingPublished => ("Nenhuma tradução publicada", "TintaSuave", false),
+            _ => ("Sem tradução instalada", "TintaSuave", false),
+        };
+        Notify(nameof(OverallColor));
+
         _scanned = true;
         _syncing = true;
         AutoUpdate = service.Settings.AutoUpdate;
         _syncing = false;
         Notify(nameof(NoChannels));
         Notify(nameof(HasChannels));
+        Notify(nameof(Loading));
+    }
+
+    /// <summary>Abre numa aba ("traducao", "canais", "opcoes" ou "ajuda").</summary>
+    public void ShowTab(string tab) => SetTab(true, tab);
+
+    private void SetTab(bool value, string tab)
+    {
+        if (!value || _tab == tab)
+        {
+            return;
+        }
+
+        _tab = tab;
+        Notify(nameof(TabTraducao));
+        Notify(nameof(TabCanais));
+        Notify(nameof(TabOpcoes));
+        Notify(nameof(TabAjuda));
     }
 }

@@ -93,6 +93,10 @@ public partial class App : Application
             Registro.Write,
             settings);
         Registro.Write($"API: {api}");
+        if (Options.Tab is { } tab)
+        {
+            ViewModel.ShowTab(tab);
+        }
 
         if (Options.Capture is { } capture)
         {
@@ -362,16 +366,8 @@ public partial class App : Application
             return;
         }
 
-        var wanted = Service.Channels.Where(c => c.Wanted).ToList();
-        var (text, alert) = true switch
-        {
-            _ when wanted.Any(c => c.Status is ChannelStatus.Outdated or ChannelStatus.NotInstalled) => ("tradução nova para instalar", true),
-            _ when wanted.Any(c => c.GameAhead) => ("o jogo está mais novo que a tradução", true),
-            _ when Service.ApiError is not null && Service.Current is null => ("sem resposta do scbr.space", false),
-            _ when wanted.Count == 0 => ("nenhum canal com a tradução", false),
-            _ => ("tradução em dia", false),
-        };
-        _tray.SetState($"{AppInfo.Name}: {text}", alert);
+        // O mesmo estado da barra do topo da janela.
+        _tray.SetState($"{AppInfo.Name}: {ViewModel.OverallText.ToLowerInvariant()}", ViewModel.OverallAlert);
     }
 
     // Quando o launcher atualiza o jogo, o build_manifest.id muda: o app confere os canais na hora (sem o site),

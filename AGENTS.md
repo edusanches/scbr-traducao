@@ -18,9 +18,11 @@ para Star Citizen. A tradução vem da ferramenta `/tradutores` do site da Star 
 ## Stack
 
 .NET 10 (LTS), C# com `Nullable` e `TreatWarningsAsErrors`. O núcleo (`src/TraducaoScbr.Core`) não tem tela e é
-testado com xUnit (`tests/TraducaoScbr.Core.Tests`). O app (`src/TraducaoScbr`) é WPF com o tema Fluent escuro e as
-cores do design system "Star Citizen Brasil" (`Tema.xaml`); a bandeja é o `NotifyIcon` do WinForms. Empacotado em
-MSIX (`packaging/`), com `runFullTrust` e o StartupTask.
+testado com xUnit (`tests/TraducaoScbr.Core.Tests`). O app (`src/TraducaoScbr`) é WPF no estilo do launcher do jogo
+(pedido do Eduardo): barra do topo própria (`WindowChrome`), botões e cartões com o canto cortado (`Chanfro`), fundo
+espacial desenhado em código (`FundoEspacial`), fonte Bahnschrift e o azul da SCBR (`Tema.xaml`). Nada de arte, logo
+ou fonte do jogo: o símbolo é o da Star Citizen Brasil. A bandeja é o `NotifyIcon` do WinForms. Empacotado em MSIX
+(`packaging/`), com `runFullTrust` e o StartupTask.
 
 ## Comandos
 

@@ -4,7 +4,11 @@ App de bandeja do Windows que instala, mantém em dia e remove a tradução PT-B
 Ele sai pela Microsoft Store e é feito pela comunidade Star Citizen Brasil ([scbr.space](https://scbr.space)), sem
 vínculo com a Cloud Imperium Games.
 
-<img src="docs/imagens/janela.png" alt="A janela do app, com a tradução em dia no LIVE e no PTU" width="560">
+<img src="docs/imagens/janela.png" alt="A janela do app, no estilo do launcher do jogo, com a tradução em dia no LIVE" width="760">
+
+A janela segue o estilo do launcher do jogo: a barra do topo própria, o canal escolhido como o "Game Environment",
+o botão grande com o canto cortado e as abas com os cartões. As artes do jogo não entram: o fundo é desenhado em
+código e o símbolo é o da Star Citizen Brasil.
 
 ## O que o app faz
 
@@ -55,7 +59,7 @@ canais que a pessoa escolher. Política de privacidade: <https://scbr.space/priv
 | Pasta | O que tem |
 |---|---|
 | `src/TraducaoScbr.Core` | O núcleo, sem tela: `Game/` (o `build_manifest.id`, o log do launcher e a busca dos canais), `Translation/` (a API, o `user.cfg` e a instalação), `State/` (as configurações e as regras de atualizar e avisar) e o `TranslationService`, que junta tudo. |
-| `src/TraducaoScbr` | O app (WPF): a janela, a bandeja (o `NotifyIcon` do WinForms), as notificações e o início com o Windows. |
+| `src/TraducaoScbr` | O app (WPF): a janela no estilo do launcher (`JanelaPrincipal`, `Tema.xaml`, o `Chanfro` dos cantos cortados e o `FundoEspacial`), a bandeja (o `NotifyIcon` do WinForms), as notificações e o início com o Windows. |
 | `tests/TraducaoScbr.Core.Tests` | Os testes do núcleo (xUnit), com um jogo de mentira em pastas temporárias e um scbr.space de mentira. |
 | `packaging` | O manifesto do MSIX, as imagens do pacote, o índice delas e o `build-msix.ps1`. |
 | `tools` | O mock da API, o gerador dos ícones e o das capturas da loja (arquivos C# que rodam com `dotnet run`). |
@@ -97,11 +101,12 @@ o sha256.
 | `--pastas "<p1>;<p2>"` | Só estas pastas, sem procurar o jogo no PC. |
 | `--bandeja` | Abre sem a janela, como no login. |
 | `--captura <arquivo.png>` | Grava a janela numa imagem (2x) e fecha. É de onde saem as capturas do README e da loja. |
+| `--aba <traducao, canais, opcoes ou ajuda>` | A aba que abre (para as capturas). |
 
 O registro do app fica em `registro.txt`, na pasta de dados.
 
 Os ícones saem do símbolo da Star Citizen Brasil, desenhado em código: `dotnet run tools/gerar-icones.cs`. As
-capturas da loja: `dotnet run tools/compor-prints.cs -- <captura.png> <saida.png> "<título>" "<texto>"`.
+capturas da loja (1920 × 1080): `dotnet run tools/compor-prints.cs -- <captura.png> <saida.png>`.
 
 ## Gerar o MSIX
 

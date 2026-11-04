@@ -1,5 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TraducaoScbr"
+                    xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
 
   <!--
     As cores do design system "Star Citizen Brasil" (src/app/globals.css do site): espaço profundo, só tema escuro.
@@ -227,6 +229,217 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+  </Style>
+
+  <!--
+    O estilo do launcher do jogo (pedido do Eduardo): azul-marinho, botões vazados com o canto cortado, abas
+    sublinhadas e a barra do topo própria. O azul de destaque continua o da SCBR, que já é o dos botões da RSI.
+  -->
+  <FontFamily x:Key="FonteLauncher">Bahnschrift SemiBold, Bahnschrift, Segoe UI Semibold</FontFamily>
+  <FontFamily x:Key="FonteLauncherTexto">Bahnschrift, Segoe UI</FontFamily>
+  <FontFamily x:Key="Icones">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+
+  <SolidColorBrush x:Key="LauncherBarra" Color="#FF0A1520" />
+  <SolidColorBrush x:Key="LauncherBarraLinha" Color="#FF16283A" />
+  <SolidColorBrush x:Key="LauncherTrilho" Color="#F0071019" />
+  <SolidColorBrush x:Key="LauncherSelecao" Color="#FF15304A" />
+  <SolidColorBrush x:Key="LauncherPainel" Color="#E00B1A2A" />
+  <SolidColorBrush x:Key="LauncherCampo" Color="#D9091726" />
+  <SolidColorBrush x:Key="LauncherBorda" Color="#FF1F4467" />
+  <SolidColorBrush x:Key="LauncherBordaForte" Color="#FF5AABF6" />
+  <SolidColorBrush x:Key="LauncherTextoClaro" Color="#FFC9D6E3" />
+  <SolidColorBrush x:Key="LauncherTextoSuave" Color="#FF8DA2B8" />
+  <SolidColorBrush x:Key="LauncherJanelaBorda" Color="#FF1C3550" />
+
+  <!-- O botão grande, vazado, em caixa alta e com o canto cortado (o "LAUNCH GAME" do launcher). -->
+  <Style x:Key="BotaoLauncher" TargetType="Button">
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="#33091726" />
+    <Setter Property="BorderBrush" Value="{StaticResource LauncherBordaForte}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="MinHeight" Value="52" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <local:Chanfro x:Name="Fundo" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                         BorderThickness="2" Cut="14" Padding="18,6">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"
+                              RecognizesAccessKey="True" />
+          </local:Chanfro>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Background" Value="{StaticResource AcentoSuave}" />
+              <Setter Property="BorderBrush" Value="{StaticResource AcentoHover}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter Property="Background" Value="#405AABF6" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter Property="BorderBrush" Value="{StaticResource Foco}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Opacity" Value="0.55" />
+              <Setter Property="Cursor" Value="Arrow" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Um botão sem moldura, só com o fundo ao passar o mouse (o seletor de canal, a engrenagem, as linhas). -->
+  <Style x:Key="BotaoNu" TargetType="Button">
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Fundo" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderThickness="1"
+                  BorderBrush="Transparent">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Fundo" Property="Background" Value="#1A5AABF6" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter TargetName="Fundo" Property="BorderBrush" Value="{StaticResource Foco}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Opacity" Value="0.5" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Os botões de texto da barra do topo ("RSI Status" e "Downloads" no launcher). -->
+  <Style x:Key="BotaoBarra" TargetType="Button" BasedOn="{StaticResource BotaoNu}">
+    <Setter Property="Foreground" Value="{StaticResource Acento}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="Padding" Value="12,0" />
+    <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{StaticResource AcentoHover}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- Minimizar e fechar, sem moldura, como no launcher. -->
+  <Style x:Key="BotaoJanela" TargetType="Button">
+    <Setter Property="Foreground" Value="#FF9FB3C8" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Width" Value="48" />
+    <Setter Property="FontFamily" Value="{StaticResource Icones}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Fundo" Background="{TemplateBinding Background}">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Fundo" Property="Background" Value="#FF16283A" />
+              <Setter Property="Foreground" Value="White" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="BotaoFechar" TargetType="Button" BasedOn="{StaticResource BotaoJanela}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="#FFB3261E" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- As abas sublinhadas ("Community" e "Patch Notes" no launcher). -->
+  <Style x:Key="Aba" TargetType="RadioButton">
+    <Setter Property="Foreground" Value="{StaticResource LauncherTextoClaro}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Margin" Value="0,0,26,0" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="RadioButton">
+          <StackPanel Background="Transparent">
+            <ContentPresenter Margin="0,0,0,8" />
+            <Border x:Name="Linha" Height="3" Background="Transparent" />
+          </StackPanel>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+              <Setter Property="Foreground" Value="White" />
+              <Setter TargetName="Linha" Property="Background" Value="White" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter TargetName="Linha" Property="Background" Value="{StaticResource Foco}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Os cartões com o canto cortado. -->
+  <Style x:Key="Cartao" TargetType="local:Chanfro">
+    <Setter Property="Background" Value="{StaticResource LauncherPainel}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LauncherBorda}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Cut" Value="16" />
+    <Setter Property="Padding" Value="22,18" />
+  </Style>
+
+  <Style x:Key="TituloCartao" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
+    <Setter Property="FontSize" Value="21" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+
+  <Style x:Key="TextoCartao" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource FonteLauncherTexto}" />
+    <Setter Property="FontSize" Value="13.5" />
+    <Setter Property="Foreground" Value="{StaticResource LauncherTextoClaro}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="LineHeight" Value="19" />
+  </Style>
+
+  <!-- O link dos cartões ("CAREFUL NOW" no launcher). -->
+  <Style x:Key="LinkCartao" TargetType="Button" BasedOn="{StaticResource BotaoNu}">
+    <Setter Property="Foreground" Value="{StaticResource Acento}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
+    <Setter Property="FontSize" Value="15" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="Padding" Value="2,2" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{StaticResource AcentoHover}" />
+      </Trigger>
+    </Style.Triggers>
   </Style>
 
   <!-- O símbolo da Star Citizen Brasil em vetor (src/components/ui/symbol.tsx do site). -->
