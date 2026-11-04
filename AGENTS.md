@@ -40,6 +40,10 @@ dotnet run tools/gerar-icones.cs                   # os ícones, do símbolo da 
 - Identificadores em inglês; comentários, mensagens e textos da tela em português.
 - Regra nova vai no núcleo, com teste. A tela só mostra o estado do `TranslationService`.
 - Os textos de erro já vêm prontos para a tela (`ApiException`, `InstallException`).
+- Nada pode desenhar por cima da barra do topo (`WindowChrome`): um elemento que pinta além dos próprios limites rouba
+  o clique dos botões, que vira arrasto da janela (o `FundoEspacial` tem `ClipToBounds` e `IsHitTestVisible=false`
+  por isso). Teste a barra com o `WM_NCHITTEST` ou um clique de mouse de verdade: a Automação de Interface aciona o
+  botão direto e não pega esse erro.
 - Scripts `.ps1` com acento são gravados em UTF-8 **com BOM** (o PowerShell 5.1 lê sem BOM como ANSI).
 - Mudou o contrato da API? O app aceita o formato antigo e o novo até as versões antigas saírem de circulação.
 
