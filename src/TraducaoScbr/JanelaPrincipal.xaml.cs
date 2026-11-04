@@ -101,14 +101,6 @@ public partial class JanelaPrincipal : Window
         OpenMenu(EngrenagemCanal, menu);
     }
 
-    private void SelecionarCanal_Click(object sender, RoutedEventArgs e)
-    {
-        if ((sender as FrameworkElement)?.DataContext is ChannelViewModel channel)
-        {
-            ViewModel.SelectedChannel = channel;
-        }
-    }
-
     private async void Instalar_Click(object sender, RoutedEventArgs e)
     {
         if (ViewModel.SelectedChannel is { } channel)

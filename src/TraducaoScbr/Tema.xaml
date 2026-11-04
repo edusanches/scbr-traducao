@@ -188,7 +188,7 @@
 
   <!-- A caixa de seleção no azul da SCBR (a do tema Fluent segue a cor de destaque do Windows). -->
   <Style x:Key="Caixa" TargetType="CheckBox">
-    <Setter Property="FontFamily" Value="{StaticResource Fonte}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteTexto}" />
     <Setter Property="FontSize" Value="13" />
     <Setter Property="Foreground" Value="{StaticResource Tinta}" />
     <Setter Property="Cursor" Value="Hand" />
@@ -235,8 +235,14 @@
     O estilo do launcher do jogo (pedido do Eduardo): azul-marinho, botões vazados com o canto cortado, abas
     sublinhadas e a barra do topo própria. O azul de destaque continua o da SCBR, que já é o dos botões da RSI.
   -->
-  <FontFamily x:Key="FonteLauncher">Bahnschrift SemiBold, Bahnschrift, Segoe UI Semibold</FontFamily>
-  <FontFamily x:Key="FonteLauncherTexto">Bahnschrift, Segoe UI</FontFamily>
+  <!--
+    As fontes do site (src/app/fonts no repositório do site), como lá: a Montserrat no menu, nos botões, nos rótulos e
+    na marca; a Exo 2 nos títulos e no texto. Ficam em Fontes/, em TTF estático, um peso por família.
+  -->
+  <FontFamily x:Key="FonteUi">pack://application:,,,/Fontes/#Montserrat SemiBold, Segoe UI Semibold</FontFamily>
+  <FontFamily x:Key="FonteMarca">pack://application:,,,/Fontes/#Montserrat Bold, Segoe UI Bold</FontFamily>
+  <FontFamily x:Key="FonteTitulos">pack://application:,,,/Fontes/#Exo 2 SemiBold, Segoe UI Semibold</FontFamily>
+  <FontFamily x:Key="FonteTexto">pack://application:,,,/Fontes/#Exo 2, Segoe UI</FontFamily>
   <FontFamily x:Key="Icones">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
 
   <SolidColorBrush x:Key="LauncherBarra" Color="#FF0A1520" />
@@ -254,8 +260,8 @@
     <Setter Property="Foreground" Value="White" />
     <Setter Property="Background" Value="#33091726" />
     <Setter Property="BorderBrush" Value="{StaticResource LauncherBordaForte}" />
-    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
-    <Setter Property="FontSize" Value="17" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="16" />
     <Setter Property="MinHeight" Value="52" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
@@ -325,8 +331,8 @@
   <!-- Os botões de texto da barra do topo ("RSI Status" e "Downloads" no launcher). -->
   <Style x:Key="BotaoBarra" TargetType="Button" BasedOn="{StaticResource BotaoNu}">
     <Setter Property="Foreground" Value="{StaticResource Acento}" />
-    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
-    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="14" />
     <Setter Property="Padding" Value="12,0" />
     <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
     <Style.Triggers>
@@ -373,10 +379,10 @@
   <!-- As abas sublinhadas ("Community" e "Patch Notes" no launcher). -->
   <Style x:Key="Aba" TargetType="RadioButton">
     <Setter Property="Foreground" Value="{StaticResource LauncherTextoClaro}" />
-    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
-    <Setter Property="FontSize" Value="17" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="15.5" />
     <Setter Property="Cursor" Value="Hand" />
-    <Setter Property="Margin" Value="0,0,26,0" />
+    <Setter Property="Margin" Value="0,0,28,0" />
     <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     <Setter Property="Template">
       <Setter.Value>
@@ -412,15 +418,15 @@
   </Style>
 
   <Style x:Key="TituloCartao" TargetType="TextBlock">
-    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteTitulos}" />
     <Setter Property="FontSize" Value="21" />
     <Setter Property="Foreground" Value="White" />
     <Setter Property="TextWrapping" Value="Wrap" />
   </Style>
 
   <Style x:Key="TextoCartao" TargetType="TextBlock">
-    <Setter Property="FontFamily" Value="{StaticResource FonteLauncherTexto}" />
-    <Setter Property="FontSize" Value="13.5" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteTexto}" />
+    <Setter Property="FontSize" Value="14" />
     <Setter Property="Foreground" Value="{StaticResource LauncherTextoClaro}" />
     <Setter Property="TextWrapping" Value="Wrap" />
     <Setter Property="LineHeight" Value="19" />
@@ -429,8 +435,8 @@
   <!-- O link dos cartões ("CAREFUL NOW" no launcher). -->
   <Style x:Key="LinkCartao" TargetType="Button" BasedOn="{StaticResource BotaoNu}">
     <Setter Property="Foreground" Value="{StaticResource Acento}" />
-    <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
-    <Setter Property="FontSize" Value="15" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="14" />
     <Setter Property="HorizontalAlignment" Value="Left" />
     <Setter Property="Padding" Value="2,2" />
     <Style.Triggers>

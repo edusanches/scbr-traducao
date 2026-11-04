@@ -64,15 +64,16 @@ public static class AppInfo
 /// <c>--api http://localhost:5199</c> (o mock), <c>--dados &lt;pasta&gt;</c> (outra pasta de configurações),
 /// <c>--pastas "&lt;pasta1&gt;;&lt;pasta2&gt;"</c> (só estas pastas, sem procurar o jogo),
 /// <c>--bandeja</c> (abre sem a janela), <c>--captura &lt;arquivo.png&gt;</c> (grava a janela numa imagem e fecha) e
-/// <c>--aba traducao|canais|opcoes|ajuda</c> (a aba que abre, para as capturas).
+/// <c>--aba traducao|opcoes|ajuda</c> e <c>--canal PTU</c> (a aba e o canal que abrem, para as capturas).
 /// A variável de ambiente TRADUCAO_SCBR_API também troca o endereço da API.
 /// </summary>
-public sealed record AppOptions(Uri? Api, string? DataFolder, IReadOnlyList<string>? OnlyFolders, bool Tray, string? Capture, string? Tab = null)
+public sealed record AppOptions(
+    Uri? Api, string? DataFolder, IReadOnlyList<string>? OnlyFolders, bool Tray, string? Capture, string? Tab = null, string? Channel = null)
 {
     public static AppOptions Parse(IReadOnlyList<string> args)
     {
         Uri? api = null;
-        string? data = null, capture = null, tab = null;
+        string? data = null, capture = null, tab = null, channel = null;
         List<string>? folders = null;
         var tray = false;
         for (var i = 0; i < args.Count; i++)
@@ -98,6 +99,9 @@ public sealed record AppOptions(Uri? Api, string? DataFolder, IReadOnlyList<stri
                 case "--aba":
                     tab = Next();
                     break;
+                case "--canal":
+                    channel = Next();
+                    break;
             }
         }
 
@@ -107,6 +111,6 @@ public sealed record AppOptions(Uri? Api, string? DataFolder, IReadOnlyList<stri
             api = fromEnv;
         }
 
-        return new AppOptions(api, data, folders, tray, capture, tab);
+        return new AppOptions(api, data, folders, tray, capture, tab, channel);
     }
 }

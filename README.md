@@ -8,7 +8,8 @@ vínculo com a Cloud Imperium Games.
 
 A janela segue o estilo do launcher do jogo: a barra do topo própria, o canal escolhido como o "Game Environment",
 o botão grande com o canto cortado e as abas com os cartões. As artes do jogo não entram: o fundo é desenhado em
-código e o símbolo é o da Star Citizen Brasil.
+código, o símbolo é o da Star Citizen Brasil e as fontes são as do site (Montserrat no menu, nos botões, nos rótulos e
+na marca; Exo 2 nos títulos e no texto).
 
 ## O que o app faz
 
@@ -59,7 +60,7 @@ canais que a pessoa escolher. Política de privacidade: <https://scbr.space/priv
 | Pasta | O que tem |
 |---|---|
 | `src/TraducaoScbr.Core` | O núcleo, sem tela: `Game/` (o `build_manifest.id`, o log do launcher e a busca dos canais), `Translation/` (a API, o `user.cfg` e a instalação), `State/` (as configurações e as regras de atualizar e avisar) e o `TranslationService`, que junta tudo. |
-| `src/TraducaoScbr` | O app (WPF): a janela no estilo do launcher (`JanelaPrincipal`, `Tema.xaml`, o `Chanfro` dos cantos cortados e o `FundoEspacial`), a bandeja (o `NotifyIcon` do WinForms), as notificações e o início com o Windows. |
+| `src/TraducaoScbr` | O app (WPF): a janela no estilo do launcher (`JanelaPrincipal`, `Tema.xaml`, o `Chanfro` dos cantos cortados e o `FundoEspacial`), as fontes do site (`Fontes/`), a bandeja (o `NotifyIcon` do WinForms), as notificações e o início com o Windows. |
 | `tests/TraducaoScbr.Core.Tests` | Os testes do núcleo (xUnit), com um jogo de mentira em pastas temporárias e um scbr.space de mentira. |
 | `packaging` | O manifesto do MSIX, as imagens do pacote, o índice delas e o `build-msix.ps1`. |
 | `tools` | O mock da API, o gerador dos ícones e o das capturas da loja (arquivos C# que rodam com `dotnet run`). |
@@ -101,11 +102,14 @@ o sha256.
 | `--pastas "<p1>;<p2>"` | Só estas pastas, sem procurar o jogo no PC. |
 | `--bandeja` | Abre sem a janela, como no login. |
 | `--captura <arquivo.png>` | Grava a janela numa imagem (2x) e fecha. É de onde saem as capturas do README e da loja. |
-| `--aba <traducao, canais, opcoes ou ajuda>` | A aba que abre (para as capturas). |
+| `--aba <traducao, opcoes ou ajuda>` | A aba que abre (para as capturas). |
+| `--canal <PTU>` | O canal que o seletor mostra ao abrir (para as capturas). |
 
 O registro do app fica em `registro.txt`, na pasta de dados.
 
-Os ícones saem do símbolo da Star Citizen Brasil, desenhado em código: `dotnet run tools/gerar-icones.cs`. As
+As fontes saem das do site (`src/app/fonts` no repositório dele), em TTF estático: `python tools/gerar-fontes.py
+<pasta src/app/fonts do site>` (precisa do `pip install fonttools brotli`). Os ícones saem do símbolo da Star Citizen
+Brasil, desenhado em código: `dotnet run tools/gerar-icones.cs`. As
 capturas da loja (1920 × 1080): `dotnet run tools/compor-prints.cs -- <captura.png> <saida.png>`.
 
 ## Gerar o MSIX
@@ -142,5 +146,6 @@ CI já sai pronto para o envio.
 
 ## Licença
 
-[MIT](LICENSE). Os ícones saem do símbolo da Star Citizen Brasil, que é da comunidade de fãs. Star Citizen® é marca
-registrada da Cloud Imperium Rights LLC; este app não tem vínculo com a Cloud Imperium Games.
+[MIT](LICENSE). As fontes Exo 2 e Montserrat são da SIL Open Font License 1.1 (`src/TraducaoScbr/Fontes/OFL-*.txt`,
+que vão junto no pacote). Os ícones saem do símbolo da Star Citizen Brasil, que é da comunidade de fãs. Star Citizen®
+é marca registrada da Cloud Imperium Rights LLC; este app não tem vínculo com a Cloud Imperium Games.

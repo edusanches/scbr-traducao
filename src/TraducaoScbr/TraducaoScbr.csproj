@@ -29,6 +29,9 @@
     <Resource Include="Recursos\app-alerta.ico" />
     <None Remove="Recursos\simbolo-256.png" />
     <Resource Include="Recursos\simbolo-256.png" />
+    <!-- As fontes do site (Exo 2 e Montserrat, SIL OFL 1.1), em TTF estático: tools/gerar-fontes.py. -->
+    <Resource Include="Fontes\*.ttf" />
+    <Content Include="Fontes\OFL-*.txt" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>

@@ -131,7 +131,7 @@ public sealed class ChannelViewModel : Observable
     public string BuildLine => State.Channel.Build is { } build ? $"build {build.ChangeNumber}" : "build desconhecido";
 
     /// <summary>A linha do canal no menu do seletor.</summary>
-    public string MenuLabel => $"{Name}   ·   {BuildLine}   ·   {StatusText}";
+    public string MenuLabel => $"{Name}   ·   {BuildLine}   ·   {StatusText}{(HasAhead ? "   ·   jogo mais novo que a tradução" : "")}";
 
     public bool IsSelected
     {
@@ -208,6 +208,7 @@ public sealed class MainViewModel : Observable
     private string _overallBrush = "TintaSuave";
     private bool _overallAlert;
     private bool _canInstall = true;
+    private string? _preferredChannel;
     private string? _waitingText;
 
     public ObservableCollection<ChannelViewModel> Channels { get; } = [];
@@ -361,8 +362,6 @@ public sealed class MainViewModel : Observable
 
     public bool TabTraducao { get => _tab == "traducao"; set => SetTab(value, "traducao"); }
 
-    public bool TabCanais { get => _tab == "canais"; set => SetTab(value, "canais"); }
-
     public bool TabOpcoes { get => _tab == "opcoes"; set => SetTab(value, "opcoes"); }
 
     public bool TabAjuda { get => _tab == "ajuda"; set => SetTab(value, "ajuda"); }
@@ -441,6 +440,7 @@ public sealed class MainViewModel : Observable
         // O seletor fica no canal que estava; senão, no primeiro com a tradução, ou no primeiro.
         var selectedPath = _selectedChannel?.Path;
         SelectedChannel = Channels.FirstOrDefault(c => string.Equals(c.Path, selectedPath, StringComparison.OrdinalIgnoreCase))
+            ?? Channels.FirstOrDefault(c => string.Equals(c.Name, _preferredChannel, StringComparison.OrdinalIgnoreCase))
             ?? Channels.FirstOrDefault(c => c.State.Wanted)
             ?? Channels.FirstOrDefault();
 
@@ -475,19 +475,21 @@ public sealed class MainViewModel : Observable
         Notify(nameof(Loading));
     }
 
-    /// <summary>Abre numa aba ("traducao", "canais", "opcoes" ou "ajuda").</summary>
+    /// <summary>Abre numa aba ("traducao", "opcoes" ou "ajuda").</summary>
     public void ShowTab(string tab) => SetTab(true, tab);
+
+    /// <summary>O canal que o seletor mostra na abertura (para as capturas), se ele existir.</summary>
+    public void PreferChannel(string name) => _preferredChannel = name;
 
     private void SetTab(bool value, string tab)
     {
-        if (!value || _tab == tab)
+        if (!value || _tab == tab || tab is not ("traducao" or "opcoes" or "ajuda"))
         {
             return;
         }
 
         _tab = tab;
         Notify(nameof(TabTraducao));
-        Notify(nameof(TabCanais));
         Notify(nameof(TabOpcoes));
         Notify(nameof(TabAjuda));
     }

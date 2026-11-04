@@ -98,6 +98,11 @@ public partial class App : Application
             ViewModel.ShowTab(tab);
         }
 
+        if (Options.Channel is { } channel)
+        {
+            ViewModel.PreferChannel(channel);
+        }
+
         if (Options.Capture is { } capture)
         {
             await CaptureAsync(capture);

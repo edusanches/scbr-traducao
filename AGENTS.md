@@ -20,9 +20,11 @@ para Star Citizen. A tradução vem da ferramenta `/tradutores` do site da Star 
 .NET 10 (LTS), C# com `Nullable` e `TreatWarningsAsErrors`. O núcleo (`src/TraducaoScbr.Core`) não tem tela e é
 testado com xUnit (`tests/TraducaoScbr.Core.Tests`). O app (`src/TraducaoScbr`) é WPF no estilo do launcher do jogo
 (pedido do Eduardo): barra do topo própria (`WindowChrome`), botões e cartões com o canto cortado (`Chanfro`), fundo
-espacial desenhado em código (`FundoEspacial`), fonte Bahnschrift e o azul da SCBR (`Tema.xaml`). Nada de arte, logo
-ou fonte do jogo: o símbolo é o da Star Citizen Brasil. A bandeja é o `NotifyIcon` do WinForms. Empacotado em MSIX
-(`packaging/`), com `runFullTrust` e o StartupTask.
+espacial desenhado em código (`FundoEspacial`) e o azul da SCBR (`Tema.xaml`). As fontes são as do site, como lá:
+Montserrat no menu, nos botões, nos rótulos e na marca; Exo 2 nos títulos e no texto (`Fontes/`, TTF estático gerado
+por `tools/gerar-fontes.py`, um peso por família, como "Montserrat SemiBold"). Nada de arte, logo ou fonte do jogo:
+o símbolo é o da Star Citizen Brasil. O canal se escolhe só pelo seletor (sem lista de canais à parte). A bandeja é
+o `NotifyIcon` do WinForms. Empacotado em MSIX (`packaging/`), com `runFullTrust` e o StartupTask.
 
 ## Comandos
 

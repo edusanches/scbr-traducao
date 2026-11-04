@@ -70,9 +70,10 @@ No app, **Iniciar o envio** e preencha cada seção:
 3. **Classificações etárias:** responda o questionário (IARC). O app não tem violência, conversa entre pessoas,
    compras nem localização: sai com a classificação livre.
 4. **Pacotes:** suba o `.msix` (família de dispositivos: Desktop). O Partner Center confere a identidade e a versão.
-5. **Listagens da loja:** só **Português (Brasil)**, com os textos de baixo. Capturas de tela (1920 × 1080):
-   [`captura-1.png`](loja/captura-1.png) (em dia), [`captura-2.png`](loja/captura-2.png) (os canais) e
-   [`captura-3.png`](loja/captura-3.png) (a primeira vez), em `docs/loja`.
+5. **Listagens da loja:** só **Português (Brasil)**, com os textos de baixo. Capturas de tela (1920 × 1080), em
+   `docs/loja`: [`captura-1.png`](loja/captura-1.png) (em dia), [`captura-2.png`](loja/captura-2.png) (o PTU num build
+   mais novo que a tradução), [`captura-3.png`](loja/captura-3.png) (as opções) e
+   [`captura-4.png`](loja/captura-4.png) (a primeira vez).
    Logotipo 1:1, se pedir: [`docs/loja/logo-1080.png`](loja/logo-1080.png) ou [`logo-300.png`](loja/logo-300.png).
 6. **Opções de envio:**
    - Notas para a certificação: o texto de baixo (os testadores não têm o Star Citizen instalado).

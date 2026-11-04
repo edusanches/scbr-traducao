@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         Background="#FF060F1A"
         Foreground="White"
-        FontFamily="{StaticResource FonteLauncherTexto}"
+        FontFamily="{StaticResource FonteTexto}"
         UseLayoutRounding="True"
         StateChanged="Janela_StateChanged">
 
@@ -20,37 +20,9 @@
   </shell:WindowChrome.WindowChrome>
 
   <Window.Resources>
-    <!-- Uma linha da aba Canais: o cartão inteiro é o botão que escolhe o canal. -->
-    <Style x:Key="LinhaCanal" TargetType="Button">
-      <Setter Property="Foreground" Value="White" />
-      <Setter Property="Cursor" Value="Hand" />
-      <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="Button">
-            <local:Chanfro x:Name="Fundo" Background="{StaticResource LauncherPainel}" BorderBrush="{StaticResource LauncherBorda}"
-                           BorderThickness="1" Cut="12" Padding="18,11">
-              <ContentPresenter />
-            </local:Chanfro>
-            <ControlTemplate.Triggers>
-              <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                <Setter TargetName="Fundo" Property="BorderBrush" Value="{StaticResource LauncherBordaForte}" />
-              </DataTrigger>
-              <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="Fundo" Property="BorderBrush" Value="{StaticResource AcentoHover}" />
-              </Trigger>
-              <Trigger Property="IsKeyboardFocused" Value="True">
-                <Setter TargetName="Fundo" Property="BorderBrush" Value="{StaticResource Foco}" />
-              </Trigger>
-            </ControlTemplate.Triggers>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-
     <Style x:Key="RotuloCartao" TargetType="TextBlock">
-      <Setter Property="FontFamily" Value="{StaticResource FonteLauncher}" />
-      <Setter Property="FontSize" Value="12.5" />
+      <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+      <Setter Property="FontSize" Value="12" />
       <Setter Property="Foreground" Value="{StaticResource LauncherTextoSuave}" />
     </Style>
 
@@ -80,7 +52,7 @@
                   AutomationProperties.Name="Menu da SCBR">
             <StackPanel Orientation="Horizontal">
               <Image Source="{StaticResource Simbolo}" Width="24" Height="24" VerticalAlignment="Center" />
-              <TextBlock Text="SCBR" FontSize="21" FontStyle="Italic" Margin="9,0,0,1" VerticalAlignment="Center" />
+              <TextBlock Text="SCBR" FontFamily="{StaticResource FonteMarca}" FontSize="19" Margin="9,0,0,1" VerticalAlignment="Center" />
               <TextBlock Style="{StaticResource Icone}" Text="&#xE70D;" FontSize="10" Margin="8,3,0,0" />
             </StackPanel>
             <Button.ContextMenu>
@@ -95,14 +67,14 @@
 
           <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
             <Rectangle Width="1" Height="20" Fill="{StaticResource LauncherBarraLinha}" />
-            <TextBlock Text="TRADUÇÃO PT-BR" FontFamily="{StaticResource FonteLauncher}" FontSize="13" Margin="14,0,0,0"
+            <TextBlock Text="TRADUÇÃO PT-BR" FontFamily="{StaticResource FonteUi}" FontSize="12" Margin="14,0,0,0"
                        Foreground="{StaticResource LauncherTextoSuave}" />
           </StackPanel>
 
           <StackPanel Grid.Column="2" Orientation="Horizontal" shell:WindowChrome.IsHitTestVisibleInChrome="True">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0" ToolTip="{Binding CheckText}">
               <Ellipse Width="8" Height="8" Fill="{Binding OverallColor}" VerticalAlignment="Center" />
-              <TextBlock Text="{Binding OverallText}" FontFamily="{StaticResource FonteLauncher}" FontSize="14" Margin="8,0,0,1"
+              <TextBlock Text="{Binding OverallText}" FontFamily="{StaticResource FonteUi}" FontSize="13.5" Margin="8,0,0,1"
                          Foreground="{StaticResource LauncherTextoClaro}" VerticalAlignment="Center" />
             </StackPanel>
             <Button Style="{StaticResource BotaoBarra}" Click="Conferir_Click" IsEnabled="{Binding Idle}" AutomationProperties.Name="Conferir agora">
@@ -143,11 +115,11 @@
                       AutomationProperties.Name="Tradução SCBR: Star Citizen em português">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
               <Image Source="{StaticResource Simbolo}" Width="64" Height="64" VerticalAlignment="Center" />
-              <TextBlock Text="T&#x2009;R&#x2009;A&#x2009;D&#x2009;U&#x2009;Ç&#x2009;Ã&#x2009;O&#x2003;S&#x2009;C&#x2009;B&#x2009;R"
-                         FontFamily="{StaticResource FonteLauncher}" FontSize="46" Margin="20,0,0,6" VerticalAlignment="Center" />
+              <TextBlock Text="T&#x2009;R&#x2009;A&#x2009;D&#x2009;U&#x2009;Ç&#x2009;Ã&#x2009;O&#x2009; &#x2009;S&#x2009;C&#x2009;B&#x2009;R"
+                         FontFamily="{StaticResource FonteMarca}" FontSize="44" Margin="20,0,0,4" VerticalAlignment="Center" />
             </StackPanel>
-            <TextBlock Text="S&#x2009;T&#x2009;A&#x2009;R&#x2003;C&#x2009;I&#x2009;T&#x2009;I&#x2009;Z&#x2009;E&#x2009;N&#x2003;E&#x2009;M&#x2003;P&#x2009;O&#x2009;R&#x2009;T&#x2009;U&#x2009;G&#x2009;U&#x2009;Ê&#x2009;S"
-                       FontFamily="{StaticResource FonteLauncher}" FontSize="14" Foreground="{StaticResource Acento}"
+            <TextBlock Text="S&#x2009;T&#x2009;A&#x2009;R&#x2009; &#x2009;C&#x2009;I&#x2009;T&#x2009;I&#x2009;Z&#x2009;E&#x2009;N&#x2009; &#x2009;E&#x2009;M&#x2009; &#x2009;P&#x2009;O&#x2009;R&#x2009;T&#x2009;U&#x2009;G&#x2009;U&#x2009;Ê&#x2009;S"
+                       FontFamily="{StaticResource FonteUi}" FontSize="13" Foreground="{StaticResource Acento}"
                        HorizontalAlignment="Center" Margin="84,4,0,0" />
           </StackPanel>
 
@@ -160,8 +132,8 @@
 
             <!-- Esquerda: o canal do jogo e a ação, como o "Game Environment" e o "LAUNCH GAME". -->
             <StackPanel VerticalAlignment="Bottom" Visibility="{Binding HasChannels, Converter={StaticResource Visivel}}">
-              <TextBlock Text="Seu Star Citizen&#10;em português" FontFamily="{StaticResource FonteLauncher}" FontSize="27" LineHeight="32" />
-              <TextBlock Text="Canal do jogo" FontSize="15" Foreground="{StaticResource LauncherTextoClaro}" Margin="0,18,0,8" />
+              <TextBlock Text="Seu Star Citizen&#10;em português" FontFamily="{StaticResource FonteTitulos}" FontSize="28" LineHeight="33" />
+              <TextBlock Text="Canal do jogo" FontFamily="{StaticResource FonteUi}" FontSize="13.5" Foreground="{StaticResource LauncherTextoClaro}" Margin="0,18,0,8" />
               <Border BorderBrush="{StaticResource LauncherBordaForte}" BorderThickness="1.5" Background="{StaticResource LauncherCampo}" Height="56">
                 <Grid>
                   <Grid.ColumnDefinitions>
@@ -173,7 +145,7 @@
                           AutomationProperties.Name="{Binding SelectedChannel.Name, StringFormat=Canal do jogo: {0}}">
                     <Grid>
                       <StackPanel VerticalAlignment="Center">
-                        <TextBlock Text="{Binding SelectedChannel.Name}" FontFamily="{StaticResource FonteLauncher}" FontSize="16" />
+                        <TextBlock Text="{Binding SelectedChannel.Name}" FontFamily="{StaticResource FonteUi}" FontSize="15" />
                         <TextBlock Text="{Binding SelectedChannel.BuildLine}" FontSize="12" Foreground="{StaticResource LauncherTextoClaro}" Margin="0,1,0,0" />
                       </StackPanel>
                       <TextBlock Style="{StaticResource Icone}" Text="&#xE70D;" FontSize="13" HorizontalAlignment="Right" />
@@ -190,7 +162,7 @@
               <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
                 <Ellipse Width="8" Height="8" Fill="{Binding SelectedChannel.StatusColor}" VerticalAlignment="Center" />
                 <TextBlock Text="{Binding SelectedChannel.StatusText}" Foreground="{Binding SelectedChannel.StatusColor}"
-                           FontFamily="{StaticResource FonteLauncher}" FontSize="14.5" Margin="8,0,0,1" TextWrapping="Wrap" MaxWidth="310" />
+                           FontFamily="{StaticResource FonteUi}" FontSize="13.5" Margin="8,0,0,1" TextWrapping="Wrap" MaxWidth="310" />
               </StackPanel>
               <TextBlock Text="{Binding SelectedChannel.InstalledText}" FontSize="12.5" Foreground="{StaticResource LauncherTextoSuave}"
                          Margin="16,2,0,0" TextWrapping="Wrap" />
@@ -213,7 +185,7 @@
                                BorderBrush="{StaticResource LauncherBorda}" Background="#33091726">
                   <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Style="{StaticResource Icone}" Text="&#xE823;" FontSize="17" Foreground="{StaticResource LauncherTextoClaro}" />
-                    <TextBlock Text="AGUARDANDO A PUBLICAÇÃO" FontFamily="{StaticResource FonteLauncher}" FontSize="17"
+                    <TextBlock Text="AGUARDANDO A PUBLICAÇÃO" FontFamily="{StaticResource FonteUi}" FontSize="16"
                                Foreground="{StaticResource LauncherTextoClaro}" Margin="12,0,0,1" VerticalAlignment="Center" />
                   </StackPanel>
                 </local:Chanfro>
@@ -224,7 +196,7 @@
                              Visibility="{Binding SelectedChannel.HasStatusBlock, Converter={StaticResource Visivel}}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                   <TextBlock Style="{StaticResource Icone}" Text="&#xE73E;" FontSize="17" Foreground="{StaticResource Positivo}" />
-                  <TextBlock Text="{Binding SelectedChannel.StatusBlockText}" FontFamily="{StaticResource FonteLauncher}" FontSize="17"
+                  <TextBlock Text="{Binding SelectedChannel.StatusBlockText}" FontFamily="{StaticResource FonteUi}" FontSize="16"
                              Foreground="{StaticResource SobrePositivoSuave}" Margin="12,0,0,1" VerticalAlignment="Center" />
                 </StackPanel>
               </local:Chanfro>
@@ -246,7 +218,7 @@
 
             <!-- Esquerda, sem o jogo. -->
             <StackPanel VerticalAlignment="Bottom" Visibility="{Binding NoChannels, Converter={StaticResource Visivel}}">
-              <TextBlock Text="Não achei o Star Citizen neste PC" FontFamily="{StaticResource FonteLauncher}" FontSize="25" TextWrapping="Wrap" />
+              <TextBlock Text="Não achei o Star Citizen neste PC" FontFamily="{StaticResource FonteTitulos}" FontSize="26" TextWrapping="Wrap" />
               <TextBlock Style="{StaticResource TextoCartao}" Margin="0,10,0,0"
                          Text="Escolha a pasta do jogo: a do canal (como LIVE ou PTU) ou a StarCitizen, onde o RSI Launcher instalou." />
               <Button Style="{StaticResource BotaoLauncher}" Margin="0,18,0,0" Click="AdicionarPasta_Click" IsEnabled="{Binding Idle}"
@@ -258,7 +230,7 @@
               </Button>
             </StackPanel>
 
-            <TextBlock VerticalAlignment="Bottom" Text="Procurando o Star Citizen…" FontFamily="{StaticResource FonteLauncher}" FontSize="20"
+            <TextBlock VerticalAlignment="Bottom" Text="Procurando o Star Citizen…" FontFamily="{StaticResource FonteTitulos}" FontSize="20"
                        Foreground="{StaticResource LauncherTextoClaro}" Visibility="{Binding Loading, Converter={StaticResource Visivel}}" />
 
             <!-- Direita: as abas e os cartões, como as notícias do launcher. -->
@@ -269,7 +241,6 @@
               </Grid.RowDefinitions>
               <StackPanel Orientation="Horizontal">
                 <RadioButton Style="{StaticResource Aba}" GroupName="Abas" Content="Tradução" IsChecked="{Binding TabTraducao}" />
-                <RadioButton Style="{StaticResource Aba}" GroupName="Abas" Content="Canais" IsChecked="{Binding TabCanais}" />
                 <RadioButton Style="{StaticResource Aba}" GroupName="Abas" Content="Opções" IsChecked="{Binding TabOpcoes}" />
                 <RadioButton Style="{StaticResource Aba}" GroupName="Abas" Content="Ajuda" IsChecked="{Binding TabAjuda}" />
               </StackPanel>
@@ -294,7 +265,7 @@
                       <StackPanel>
                         <TextBlock Style="{StaticResource RotuloCartao}" Text="TRADUÇÃO PUBLICADA" />
                         <TextBlock Style="{StaticResource TituloCartao}" Text="{Binding PublicationTitle}" FontSize="26" Margin="0,10,0,0" />
-                        <TextBlock Text="{Binding PublicationBuild}" FontFamily="{StaticResource FonteLauncher}" FontSize="15"
+                        <TextBlock Text="{Binding PublicationBuild}" FontFamily="{StaticResource FonteUi}" FontSize="14"
                                    Foreground="{StaticResource LauncherTextoClaro}" Margin="0,2,0,0" />
                         <TextBlock Style="{StaticResource TextoCartao}" Text="{Binding PublicationDate}" Margin="0,14,0,0" />
                       </StackPanel>
@@ -318,51 +289,6 @@
                     </DockPanel>
                   </local:Chanfro>
                 </Grid>
-
-                <!-- Canais -->
-                <DockPanel Visibility="{Binding TabCanais, Converter={StaticResource Visivel}}">
-                  <Button DockPanel.Dock="Bottom" Style="{StaticResource LinkCartao}" Margin="0,4,0,0" Click="AdicionarPasta_Click" IsEnabled="{Binding Idle}"
-                          AutomationProperties.Name="Adicionar pasta do jogo">
-                    <StackPanel Orientation="Horizontal">
-                      <TextBlock Style="{StaticResource Icone}" Text="&#xE710;" FontSize="14" />
-                      <TextBlock Text="ADICIONAR PASTA DO JOGO" Margin="8,0,0,1" VerticalAlignment="Center" />
-                    </StackPanel>
-                  </Button>
-                  <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
-                    <ItemsControl ItemsSource="{Binding Channels}" Focusable="False">
-                      <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type local:ChannelViewModel}">
-                          <Button Style="{StaticResource LinhaCanal}" Margin="0,0,6,10" Click="SelecionarCanal_Click"
-                                  AutomationProperties.Name="{Binding Name, StringFormat=Escolher o canal {0}}">
-                            <Grid>
-                              <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="120" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                              </Grid.ColumnDefinitions>
-                              <TextBlock Text="{Binding Name}" FontFamily="{StaticResource FonteLauncher}" FontSize="18" VerticalAlignment="Center" />
-                              <StackPanel Grid.Column="1" Margin="0,0,12,0">
-                                <StackPanel Orientation="Horizontal">
-                                  <Ellipse Width="8" Height="8" Fill="{Binding StatusColor}" VerticalAlignment="Center" />
-                                  <TextBlock Text="{Binding StatusText}" Foreground="{Binding StatusColor}" FontFamily="{StaticResource FonteLauncher}"
-                                             FontSize="14" Margin="8,0,0,1" />
-                                </StackPanel>
-                                <TextBlock Text="{Binding Path}" FontFamily="{StaticResource FonteMono}" FontSize="11.5" Foreground="{StaticResource LauncherTextoSuave}"
-                                           TextTrimming="CharacterEllipsis" ToolTip="{Binding Path}" Margin="16,3,0,0" />
-                              </StackPanel>
-                              <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                                <TextBlock Text="{Binding BuildLine}" FontSize="12.5" Foreground="{StaticResource LauncherTextoClaro}" HorizontalAlignment="Right" />
-                                <TextBlock Text="mais novo que a tradução" FontSize="12" Foreground="{StaticResource Aviso}" HorizontalAlignment="Right"
-                                           Margin="0,2,0,0" ToolTip="{Binding AheadText}"
-                                           Visibility="{Binding HasAhead, Converter={StaticResource Visivel}}" />
-                              </StackPanel>
-                            </Grid>
-                          </Button>
-                        </DataTemplate>
-                      </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                  </ScrollViewer>
-                </DockPanel>
 
                 <!-- Opções -->
                 <local:Chanfro Style="{StaticResource Cartao}" Visibility="{Binding TabOpcoes, Converter={StaticResource Visivel}}">
