@@ -1,0 +1,17 @@
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directories:
+      - "/"
+      - "/packaging/ferramentas"
+    schedule:
+      interval: weekly
+    labels:
+      - infra
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    labels:
+      - infra

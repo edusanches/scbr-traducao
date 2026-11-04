@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- O núcleo do app, sem tela: acha os canais, lê o build, fala com a API e instala ou remove a tradução. -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <RootNamespace>TraducaoScbr.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="TraducaoScbr.Core.Tests" />
+  </ItemGroup>
+
+</Project>

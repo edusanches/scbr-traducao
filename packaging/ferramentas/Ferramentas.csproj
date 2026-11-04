@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Só para o build-msix.ps1 baixar o makeappx e o makepri (Windows SDK Build Tools, da Microsoft) pelo NuGet,
+    quando o PC não tem o Windows SDK. Não entra na solução nem é compilado: o script só faz o restore.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2957" ExcludeAssets="all" />
+  </ItemGroup>
+
+</Project>

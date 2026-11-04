@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build, testes e MSIX
+    runs-on: windows-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+      DOTNET_NOLOGO: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Build
+        run: dotnet build TraducaoScbr.slnx -c Release
+
+      - name: Testes
+        run: dotnet test TraducaoScbr.slnx -c Release --no-build
+
+      # Com as variáveis do repositório LOJA_* (a identidade do Partner Center), o pacote já sai pronto para a loja.
+      - name: MSIX
+        shell: pwsh
+        env:
+          LOJA_IDENTITY_NAME: ${{ vars.LOJA_IDENTITY_NAME }}
+          LOJA_PUBLISHER: ${{ vars.LOJA_PUBLISHER }}
+          LOJA_PUBLISHER_DISPLAY_NAME: ${{ vars.LOJA_PUBLISHER_DISPLAY_NAME }}
+        run: |
+          $identity = @{}
+          if ($env:LOJA_IDENTITY_NAME) {
+            $identity = @{
+              IdentityName = $env:LOJA_IDENTITY_NAME
+              Publisher = $env:LOJA_PUBLISHER
+              PublisherDisplayName = $env:LOJA_PUBLISHER_DISPLAY_NAME
+            }
+          }
+          ./packaging/build-msix.ps1 @identity
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TraducaoSCBR-msix
+          path: artifacts/*.msix
+          if-no-files-found: error

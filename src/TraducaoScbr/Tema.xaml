@@ -1,0 +1,515 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:TraducaoScbr"
+                    xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework">
+
+  <!--
+    As cores do design system "Star Citizen Brasil" (src/app/globals.css do site): espaço profundo, só tema escuro.
+    As transparências do site viram cores ARGB.
+  -->
+  <Color x:Key="CorSuperficie">#FF060912</Color>
+  <Color x:Key="CorSuperficieElevada">#FF0B1020</Color>
+  <Color x:Key="CorSuperficieFunda">#FF04060D</Color>
+  <Color x:Key="CorVidro">#09FFFFFF</Color>
+  <Color x:Key="CorVidroForte">#12FFFFFF</Color>
+  <Color x:Key="CorLinha">#2494A3B8</Color>
+  <Color x:Key="CorLinhaForte">#5794A3B8</Color>
+  <Color x:Key="CorTinta">#FFEDF2FB</Color>
+  <Color x:Key="CorTintaSuave">#FF97A2B6</Color>
+  <Color x:Key="CorAcento">#FF5AABF6</Color>
+  <Color x:Key="CorAcentoHover">#FF8FC8FA</Color>
+  <Color x:Key="CorSobreAcento">#FF03111F</Color>
+  <Color x:Key="CorAcentoSuave">#245AABF6</Color>
+  <Color x:Key="CorSobreAcentoSuave">#FFB9DCFC</Color>
+  <Color x:Key="CorPositivo">#FF22C96B</Color>
+  <Color x:Key="CorPositivoSuave">#2122C96B</Color>
+  <Color x:Key="CorSobrePositivoSuave">#FF93EFBA</Color>
+  <Color x:Key="CorAviso">#FFF0B45A</Color>
+  <Color x:Key="CorAvisoSuave">#1FF0B45A</Color>
+  <Color x:Key="CorPerigo">#FFF2877E</Color>
+  <Color x:Key="CorPerigoSuave">#1FF2877E</Color>
+  <Color x:Key="CorFoco">#FF86B4FF</Color>
+  <Color x:Key="CorBarra">#FF0A1835</Color>
+
+  <SolidColorBrush x:Key="Superficie" Color="{StaticResource CorSuperficie}" />
+  <SolidColorBrush x:Key="SuperficieElevada" Color="{StaticResource CorSuperficieElevada}" />
+  <SolidColorBrush x:Key="SuperficieFunda" Color="{StaticResource CorSuperficieFunda}" />
+  <SolidColorBrush x:Key="Vidro" Color="{StaticResource CorVidro}" />
+  <SolidColorBrush x:Key="VidroForte" Color="{StaticResource CorVidroForte}" />
+  <SolidColorBrush x:Key="Linha" Color="{StaticResource CorLinha}" />
+  <SolidColorBrush x:Key="LinhaForte" Color="{StaticResource CorLinhaForte}" />
+  <SolidColorBrush x:Key="Tinta" Color="{StaticResource CorTinta}" />
+  <SolidColorBrush x:Key="TintaSuave" Color="{StaticResource CorTintaSuave}" />
+  <SolidColorBrush x:Key="Acento" Color="{StaticResource CorAcento}" />
+  <SolidColorBrush x:Key="AcentoHover" Color="{StaticResource CorAcentoHover}" />
+  <SolidColorBrush x:Key="SobreAcento" Color="{StaticResource CorSobreAcento}" />
+  <SolidColorBrush x:Key="AcentoSuave" Color="{StaticResource CorAcentoSuave}" />
+  <SolidColorBrush x:Key="SobreAcentoSuave" Color="{StaticResource CorSobreAcentoSuave}" />
+  <SolidColorBrush x:Key="Positivo" Color="{StaticResource CorPositivo}" />
+  <SolidColorBrush x:Key="PositivoSuave" Color="{StaticResource CorPositivoSuave}" />
+  <SolidColorBrush x:Key="SobrePositivoSuave" Color="{StaticResource CorSobrePositivoSuave}" />
+  <SolidColorBrush x:Key="Aviso" Color="{StaticResource CorAviso}" />
+  <SolidColorBrush x:Key="AvisoSuave" Color="{StaticResource CorAvisoSuave}" />
+  <SolidColorBrush x:Key="Perigo" Color="{StaticResource CorPerigo}" />
+  <SolidColorBrush x:Key="PerigoSuave" Color="{StaticResource CorPerigoSuave}" />
+  <SolidColorBrush x:Key="Foco" Color="{StaticResource CorFoco}" />
+  <SolidColorBrush x:Key="Barra" Color="{StaticResource CorBarra}" />
+
+  <!-- O fundo com o brilho de nebulosa do site (glow-blue e glow-green). -->
+  <RadialGradientBrush x:Key="FundoJanela" Center="0.15,0" GradientOrigin="0.15,0" RadiusX="0.9" RadiusY="0.6">
+    <GradientStop Color="#264F8CFF" Offset="0" />
+    <GradientStop Color="#00060912" Offset="1" />
+  </RadialGradientBrush>
+
+  <FontFamily x:Key="Fonte">Segoe UI Variable Text, Segoe UI</FontFamily>
+  <FontFamily x:Key="FonteTitulo">Segoe UI Variable Display, Segoe UI</FontFamily>
+  <FontFamily x:Key="FonteMono">Cascadia Mono, Consolas</FontFamily>
+
+  <!-- O anel de foco do teclado, na cor de foco do site. -->
+  <Style x:Key="AnelDeFoco">
+    <Setter Property="Control.Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Border Margin="-3" BorderBrush="{StaticResource Foco}" BorderThickness="2" CornerRadius="9" />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Botões: o principal no azul claro dos botões da RSI, o secundário em vidro e o de link. -->
+  <Style x:Key="BotaoBase" TargetType="Button">
+    <Setter Property="FontFamily" Value="{StaticResource Fonte}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Padding" Value="14,7" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FocusVisualStyle" Value="{StaticResource AnelDeFoco}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Fundo" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}"
+                  SnapsToDevicePixels="True">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Fundo" Property="Opacity" Value="0.45" />
+              <Setter Property="Cursor" Value="Arrow" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="BotaoPrincipal" TargetType="Button" BasedOn="{StaticResource BotaoBase}">
+    <Setter Property="Background" Value="{StaticResource Acento}" />
+    <Setter Property="Foreground" Value="{StaticResource SobreAcento}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Acento}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="{StaticResource AcentoHover}" />
+        <Setter Property="BorderBrush" Value="{StaticResource AcentoHover}" />
+      </Trigger>
+      <Trigger Property="IsPressed" Value="True">
+        <Setter Property="Background" Value="{StaticResource Acento}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style x:Key="BotaoSecundario" TargetType="Button" BasedOn="{StaticResource BotaoBase}">
+    <Setter Property="Background" Value="{StaticResource VidroForte}" />
+    <Setter Property="Foreground" Value="{StaticResource Tinta}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LinhaForte}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="{StaticResource AcentoSuave}" />
+        <Setter Property="BorderBrush" Value="{StaticResource Acento}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <Style x:Key="BotaoLink" TargetType="Button" BasedOn="{StaticResource BotaoBase}">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Foreground" Value="{StaticResource Acento}" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="2,1" />
+    <Setter Property="FontWeight" Value="Normal" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{StaticResource AcentoHover}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- Os blocos da tela (como os Panel do site). -->
+  <Style x:Key="Painel" TargetType="Border">
+    <Setter Property="Background" Value="{StaticResource SuperficieElevada}" />
+    <Setter Property="BorderBrush" Value="{StaticResource Linha}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="10" />
+    <Setter Property="Padding" Value="16,14" />
+  </Style>
+
+  <Style x:Key="Rotulo" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Fonte}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="Foreground" Value="{StaticResource TintaSuave}" />
+  </Style>
+
+  <Style x:Key="Texto" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource Fonte}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{StaticResource Tinta}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+
+  <Style x:Key="TextoSuave" TargetType="TextBlock" BasedOn="{StaticResource Texto}">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="Foreground" Value="{StaticResource TintaSuave}" />
+  </Style>
+
+  <!-- A etiqueta do canal (LIVE, PTU...), como as Tag do site. -->
+  <Style x:Key="Etiqueta" TargetType="Border">
+    <Setter Property="Background" Value="{StaticResource AcentoSuave}" />
+    <Setter Property="BorderBrush" Value="#405AABF6" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="CornerRadius" Value="4" />
+    <Setter Property="Padding" Value="7,2" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <!-- A caixa de seleção no azul da SCBR (a do tema Fluent segue a cor de destaque do Windows). -->
+  <Style x:Key="Caixa" TargetType="CheckBox">
+    <Setter Property="FontFamily" Value="{StaticResource FonteTexto}" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="Foreground" Value="{StaticResource Tinta}" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="CheckBox">
+          <Grid Background="Transparent">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Border x:Name="Quadro" Width="18" Height="18" CornerRadius="4" BorderThickness="1.5" VerticalAlignment="Top" Margin="0,1,0,0"
+                    BorderBrush="{StaticResource LinhaForte}" Background="{StaticResource Vidro}">
+              <Path x:Name="Marca" Data="M3.5,8.5 L7,12 L13,5" Stroke="{StaticResource SobreAcento}" StrokeThickness="2.2"
+                    StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round" Visibility="Collapsed" />
+            </Border>
+            <ContentPresenter Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" RecognizesAccessKey="True" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Quadro" Property="BorderBrush" Value="{StaticResource Acento}" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+              <Setter TargetName="Quadro" Property="Background" Value="{StaticResource Acento}" />
+              <Setter TargetName="Quadro" Property="BorderBrush" Value="{StaticResource Acento}" />
+              <Setter TargetName="Marca" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter TargetName="Quadro" Property="BorderBrush" Value="{StaticResource Foco}" />
+              <Setter TargetName="Quadro" Property="BorderThickness" Value="2" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Opacity" Value="0.5" />
+              <Setter Property="Cursor" Value="Arrow" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!--
+    O estilo do launcher do jogo (pedido do Eduardo): azul-marinho, botões vazados com o canto cortado, abas
+    sublinhadas e a barra do topo própria. O azul de destaque continua o da SCBR, que já é o dos botões da RSI.
+  -->
+  <!--
+    As fontes do site (src/app/fonts no repositório do site), como lá: a Montserrat no menu, nos botões, nos rótulos e
+    na marca; a Exo 2 nos títulos e no texto. Ficam em Fontes/, em TTF estático, um peso por família.
+  -->
+  <FontFamily x:Key="FonteUi">pack://application:,,,/Fontes/#Montserrat SemiBold, Segoe UI Semibold</FontFamily>
+  <FontFamily x:Key="FonteMarca">pack://application:,,,/Fontes/#Montserrat Bold, Segoe UI Bold</FontFamily>
+  <FontFamily x:Key="FonteTitulos">pack://application:,,,/Fontes/#Exo 2 SemiBold, Segoe UI Semibold</FontFamily>
+  <FontFamily x:Key="FonteTexto">pack://application:,,,/Fontes/#Exo 2, Segoe UI</FontFamily>
+  <FontFamily x:Key="Icones">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+
+  <SolidColorBrush x:Key="LauncherBarra" Color="#FF0A1520" />
+  <SolidColorBrush x:Key="LauncherBarraLinha" Color="#FF16283A" />
+  <SolidColorBrush x:Key="LauncherPainel" Color="#E00B1A2A" />
+  <SolidColorBrush x:Key="LauncherCampo" Color="#D9091726" />
+  <SolidColorBrush x:Key="LauncherBorda" Color="#FF1F4467" />
+  <SolidColorBrush x:Key="LauncherBordaForte" Color="#FF5AABF6" />
+  <SolidColorBrush x:Key="LauncherTextoClaro" Color="#FFC9D6E3" />
+  <SolidColorBrush x:Key="LauncherTextoSuave" Color="#FF8DA2B8" />
+  <SolidColorBrush x:Key="LauncherJanelaBorda" Color="#FF1C3550" />
+
+  <!-- O botão grande, vazado, em caixa alta e com o canto cortado (o "LAUNCH GAME" do launcher). -->
+  <Style x:Key="BotaoLauncher" TargetType="Button">
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="#33091726" />
+    <Setter Property="BorderBrush" Value="{StaticResource LauncherBordaForte}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="16" />
+    <Setter Property="MinHeight" Value="52" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="HorizontalContentAlignment" Value="Center" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <local:Chanfro x:Name="Fundo" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"
+                         BorderThickness="2" Cut="14" Padding="18,6">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="Center"
+                              RecognizesAccessKey="True" />
+          </local:Chanfro>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Background" Value="{StaticResource AcentoSuave}" />
+              <Setter Property="BorderBrush" Value="{StaticResource AcentoHover}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter Property="Background" Value="#405AABF6" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter Property="BorderBrush" Value="{StaticResource Foco}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Opacity" Value="0.55" />
+              <Setter Property="Cursor" Value="Arrow" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Um botão sem moldura, só com o fundo ao passar o mouse (o seletor de canal, a engrenagem, as linhas). -->
+  <Style x:Key="BotaoNu" TargetType="Button">
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Fundo" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" BorderThickness="1"
+                  BorderBrush="Transparent">
+            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Fundo" Property="Background" Value="#1A5AABF6" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter TargetName="Fundo" Property="BorderBrush" Value="{StaticResource Foco}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Opacity" Value="0.5" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Os botões de texto da barra do topo ("RSI Status" e "Downloads" no launcher). -->
+  <Style x:Key="BotaoBarra" TargetType="Button" BasedOn="{StaticResource BotaoNu}">
+    <Setter Property="Foreground" Value="{StaticResource Acento}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Padding" Value="12,0" />
+    <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{StaticResource AcentoHover}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- Minimizar e fechar, sem moldura, como no launcher. -->
+  <Style x:Key="BotaoJanela" TargetType="Button">
+    <Setter Property="Foreground" Value="#FF9FB3C8" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Width" Value="48" />
+    <Setter Property="FontFamily" Value="{StaticResource Icones}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="shell:WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Border x:Name="Fundo" Background="{TemplateBinding Background}">
+            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Fundo" Property="Background" Value="#FF16283A" />
+              <Setter Property="Foreground" Value="White" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style x:Key="BotaoFechar" TargetType="Button" BasedOn="{StaticResource BotaoJanela}">
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Background" Value="#FFB3261E" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!-- As abas sublinhadas ("Community" e "Patch Notes" no launcher). -->
+  <Style x:Key="Aba" TargetType="RadioButton">
+    <Setter Property="Foreground" Value="{StaticResource LauncherTextoClaro}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="15.5" />
+    <Setter Property="Cursor" Value="Hand" />
+    <Setter Property="Margin" Value="0,0,28,0" />
+    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="RadioButton">
+          <StackPanel Background="Transparent">
+            <ContentPresenter Margin="0,0,0,8" />
+            <Border x:Name="Linha" Height="3" Background="Transparent" />
+          </StackPanel>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="Foreground" Value="White" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+              <Setter Property="Foreground" Value="White" />
+              <Setter TargetName="Linha" Property="Background" Value="White" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+              <Setter TargetName="Linha" Property="Background" Value="{StaticResource Foco}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Os cartões com o canto cortado. -->
+  <Style x:Key="Cartao" TargetType="local:Chanfro">
+    <Setter Property="Background" Value="{StaticResource LauncherPainel}" />
+    <Setter Property="BorderBrush" Value="{StaticResource LauncherBorda}" />
+    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="Cut" Value="16" />
+    <Setter Property="Padding" Value="22,18" />
+  </Style>
+
+  <Style x:Key="TituloCartao" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource FonteTitulos}" />
+    <Setter Property="FontSize" Value="21" />
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+  </Style>
+
+  <Style x:Key="TextoCartao" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource FonteTexto}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{StaticResource LauncherTextoClaro}" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="LineHeight" Value="19" />
+  </Style>
+
+  <!-- O link dos cartões ("CAREFUL NOW" no launcher). -->
+  <Style x:Key="LinkCartao" TargetType="Button" BasedOn="{StaticResource BotaoNu}">
+    <Setter Property="Foreground" Value="{StaticResource Acento}" />
+    <Setter Property="FontFamily" Value="{StaticResource FonteUi}" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="Padding" Value="2,2" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="True">
+        <Setter Property="Foreground" Value="{StaticResource AcentoHover}" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+
+  <!--
+    O logo do site (src/components/ui/logo.tsx e public/marca no repositório do site). A arte do símbolo sem o quadro;
+    a marca do cabeçalho (o verde da faixa da bandeira terminando em diagonal, com a arte); e o nome "STAR CITIZEN
+    BRASIL" em curvas, tirado de public/marca/logo-horizontal.svg, com o espaçamento e as cores do site. O "F1"
+    preenche como o SVG (nonzero): sem ele, as partes das letras que se sobrepõem viram furos.
+  -->
+  <DrawingGroup x:Key="ArteDoSimbolo">
+    <GeometryDrawing Brush="#FFD43B" Geometry="M24,9.5 L43,24 L24,38.5 L5,24 Z">
+      <GeometryDrawing.Pen>
+        <Pen Brush="#FFD43B" Thickness="1.2" LineJoin="Round" />
+      </GeometryDrawing.Pen>
+    </GeometryDrawing>
+    <GeometryDrawing>
+      <GeometryDrawing.Pen>
+        <Pen Brush="White" Thickness="2" />
+      </GeometryDrawing.Pen>
+      <GeometryDrawing.Geometry>
+        <EllipseGeometry Center="24,24" RadiusX="17.5" RadiusY="5">
+          <EllipseGeometry.Transform>
+            <RotateTransform Angle="-16" CenterX="24" CenterY="24" />
+          </EllipseGeometry.Transform>
+        </EllipseGeometry>
+      </GeometryDrawing.Geometry>
+    </GeometryDrawing>
+    <GeometryDrawing Brush="#2B5FD6">
+      <GeometryDrawing.Geometry>
+        <EllipseGeometry Center="24,24" RadiusX="9" RadiusY="9" />
+      </GeometryDrawing.Geometry>
+    </GeometryDrawing>
+    <GeometryDrawing Brush="#4F8CFF" Geometry="M29.285,16.715 A9,9 0 0 0 16.715,29.285 A9,9 0 0 0 29.285,16.715 Z" />
+    <GeometryDrawing>
+      <GeometryDrawing.Pen>
+        <Pen Brush="White" Thickness="2" />
+      </GeometryDrawing.Pen>
+      <GeometryDrawing.Geometry>
+        <PathGeometry Figures="M6.5,24 A17.5,5 0 0 0 41.5,24">
+          <PathGeometry.Transform>
+            <RotateTransform Angle="-16" CenterX="24" CenterY="24" />
+          </PathGeometry.Transform>
+        </PathGeometry>
+      </GeometryDrawing.Geometry>
+    </GeometryDrawing>
+  </DrawingGroup>
+
+  <!-- A marca do cabeçalho do site: viewBox 0 0 92 64, a arte em translate(40 32) scale(1.4) translate(-24 -24). -->
+  <DrawingImage x:Key="MarcaCabecalho">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing Brush="#009C3B" Geometry="M0,0 H92 L76,64 H0 Z" />
+        <DrawingGroup Transform="1.4,0,0,1.4,6.4,-1.6">
+          <StaticResource ResourceKey="ArteDoSimbolo" />
+        </DrawingGroup>
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+
+  <DrawingImage x:Key="NomeDoSite">
+    <DrawingImage.Drawing>
+      <DrawingGroup>
+        <GeometryDrawing Brush="#FFFFFF" Geometry="F1 M131.78 63.92Q128.09 63.92 124.7 62.93Q121.3 61.95 119.24 60.38L121.65 54.99Q123.61 56.4 126.33 57.3Q129.05 58.2 131.81 58.2Q133.95 58.2 135.24 57.78Q136.54 57.35 137.15 56.61Q137.76 55.86 137.76 54.91Q137.76 53.68 136.78 52.94Q135.8 52.2 134.22 51.74Q132.63 51.28 130.72 50.86Q128.81 50.45 126.89 49.85Q124.98 49.24 123.39 48.27Q121.81 47.3 120.83 45.7Q119.85 44.11 119.85 41.64Q119.85 39.02 121.27 36.85Q122.69 34.69 125.58 33.38Q128.46 32.08 132.84 32.08Q135.73 32.08 138.55 32.77Q141.37 33.45 143.53 34.79L141.31 40.19Q139.18 38.97 137.01 38.38Q134.83 37.8 132.78 37.8Q130.7 37.8 129.4 38.27Q128.09 38.75 127.5 39.54Q126.92 40.32 126.92 41.3Q126.92 42.52 127.9 43.24Q128.87 43.97 130.46 44.41Q132.04 44.85 133.96 45.27Q135.88 45.69 137.79 46.28Q139.7 46.87 141.28 47.83Q142.87 48.79 143.85 50.38Q144.82 51.96 144.82 54.38Q144.82 56.96 143.39 59.13Q141.96 61.3 139.07 62.61Q136.18 63.92 131.78 63.92ZM160.49 63.4V38.42H150.65V32.6H177.48V38.42H167.64V63.4ZM181.65 63.4 195.38 32.6H202.43L216.19 63.4H208.74L197.45 36.23H200.27L188.97 63.4ZM188.55 56.81 190.42 51.4H206.28L208.18 56.81ZM223.82 63.4V32.6H236.96Q243.4 32.6 246.97 35.58Q250.53 38.56 250.53 43.76Q250.53 47.2 248.91 49.68Q247.28 52.16 244.28 53.48Q241.29 54.81 237.13 54.81H227.78L230.96 51.71V63.4ZM243.42 63.4 235.69 52.21H243.32L251.11 63.4ZM230.96 52.48 227.78 49.12H236.76Q240.04 49.12 241.68 47.71Q243.32 46.29 243.32 43.76Q243.32 41.22 241.68 39.81Q240.04 38.4 236.76 38.4H227.78L230.96 35.02ZM292.17 63.92Q288.58 63.92 285.53 62.75Q282.47 61.59 280.23 59.44Q277.99 57.3 276.74 54.39Q275.49 51.48 275.49 48Q275.49 44.52 276.74 41.61Q277.99 38.7 280.24 36.56Q282.5 34.41 285.55 33.25Q288.61 32.08 292.2 32.08Q296.2 32.08 299.44 33.47Q302.69 34.85 304.87 37.53L300.31 41.76Q298.73 39.96 296.79 39.04Q294.85 38.12 292.54 38.12Q290.38 38.12 288.58 38.84Q286.78 39.55 285.47 40.87Q284.15 42.19 283.42 44Q282.69 45.82 282.69 48Q282.69 50.18 283.42 52Q284.15 53.81 285.47 55.13Q286.78 56.45 288.58 57.16Q290.38 57.88 292.54 57.88Q294.85 57.88 296.79 56.96Q298.73 56.04 300.31 54.22L304.87 58.45Q302.69 61.1 299.44 62.51Q296.2 63.92 292.17 63.92ZM313.67 63.4V32.6H320.81V63.4ZM338.87 63.4V38.42H329.02V32.6H355.86V38.42H346.01V63.4ZM364.09 63.4V32.6H371.23V63.4ZM380.95 63.4V58.8L400.02 35.82L400.87 38.42H381.31V32.6H407.23V37.2L388.19 60.18L387.31 57.58H407.86V63.4ZM416.85 63.4V32.6H440.1V38.33H423.92V57.67H440.7V63.4ZM423.4 50.54V45H438.25V50.54ZM450.77 63.4V32.6H456.65L474.84 54.8H471.99V32.6H479.03V63.4H473.15L454.96 41.2H457.81V63.4Z" />
+        <GeometryDrawing Brush="#FFD43B" Geometry="F1 M507.57 63.4V32.6H522.62Q528.42 32.6 531.36 34.8Q534.3 37 534.3 40.63Q534.3 43.04 533.11 44.81Q531.92 46.58 529.84 47.56Q527.76 48.54 525.08 48.54L525.91 46.72Q528.83 46.72 531.06 47.68Q533.29 48.63 534.57 50.48Q535.84 52.33 535.84 54.99Q535.84 58.97 532.71 61.18Q529.59 63.4 523.5 63.4ZM514.65 58.05H522.99Q525.75 58.05 527.19 57.13Q528.63 56.21 528.63 54.25Q528.63 52.29 527.19 51.36Q525.75 50.42 522.99 50.42H514.13V45.23H521.75Q524.36 45.23 525.73 44.32Q527.1 43.41 527.1 41.59Q527.1 39.76 525.73 38.85Q524.36 37.95 521.75 37.95H514.65ZM545.63 63.4V32.6H558.77Q565.22 32.6 568.78 35.58Q572.35 38.56 572.35 43.76Q572.35 47.2 570.72 49.68Q569.1 52.16 566.1 53.48Q563.1 54.81 558.95 54.81H549.59L552.78 51.71V63.4ZM565.24 63.4 557.51 52.21H565.14L572.93 63.4ZM552.78 52.48 549.59 49.12H558.58Q561.85 49.12 563.5 47.71Q565.14 46.29 565.14 43.76Q565.14 41.22 563.5 39.81Q561.85 38.4 558.58 38.4H549.59L552.78 35.02ZM578.31 63.4 592.04 32.6H599.09L612.85 63.4H605.4L594.11 36.23H596.93L585.63 63.4ZM585.21 56.81 587.08 51.4H602.94L604.84 56.81ZM630.61 63.92Q626.92 63.92 623.53 62.93Q620.13 61.95 618.06 60.38L620.48 54.99Q622.44 56.4 625.16 57.3Q627.88 58.2 630.64 58.2Q632.78 58.2 634.07 57.78Q635.37 57.35 635.98 56.61Q636.58 55.86 636.58 54.91Q636.58 53.68 635.61 52.94Q634.63 52.2 633.05 51.74Q631.46 51.28 629.55 50.86Q627.64 50.45 625.72 49.85Q623.8 49.24 622.22 48.27Q620.63 47.3 619.66 45.7Q618.68 44.11 618.68 41.64Q618.68 39.02 620.1 36.85Q621.52 34.69 624.41 33.38Q627.29 32.08 631.67 32.08Q634.56 32.08 637.38 32.77Q640.2 33.45 642.36 34.79L640.14 40.19Q638.01 38.97 635.83 38.38Q633.66 37.8 631.61 37.8Q629.53 37.8 628.22 38.27Q626.92 38.75 626.33 39.54Q625.75 40.32 625.75 41.3Q625.75 42.52 626.72 43.24Q627.7 43.97 629.29 44.41Q630.87 44.85 632.79 45.27Q634.71 45.69 636.62 46.28Q638.53 46.87 640.11 47.83Q641.7 48.79 642.67 50.38Q643.65 51.96 643.65 54.38Q643.65 56.96 642.22 59.13Q640.78 61.3 637.89 62.61Q635.01 63.92 630.61 63.92ZM652.95 63.4V32.6H660.09V63.4ZM671.78 63.4V32.6H678.93V57.58H694.34V63.4Z" />
+      </DrawingGroup>
+    </DrawingImage.Drawing>
+  </DrawingImage>
+
+
+</ResourceDictionary>

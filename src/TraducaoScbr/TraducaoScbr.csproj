@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- O app de bandeja. O TFM com a versão do Windows traz as APIs do pacote (o início com o Windows). -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <UseWPF>true</UseWPF>
+    <!-- Só pelo ícone da bandeja (NotifyIcon). -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>TraducaoSCBR</AssemblyName>
+    <RootNamespace>TraducaoScbr</RootNamespace>
+    <ApplicationIcon>Recursos\app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <!-- O tema Fluent do WPF (ThemeMode) ainda é marcado como experimental. O DPI fica no app.manifest, que é o
+         jeito do WPF (o aviso WFO0003 é do WinForms, que aqui só desenha a bandeja). -->
+    <NoWarn>$(NoWarn);WPF0001;WFO0003</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- O WinForms entra só pela bandeja: os nomes dele não podem disputar com os do WPF. -->
+    <Using Remove="System.Windows.Forms" />
+    <Using Remove="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Recursos\app.ico" />
+    <Resource Include="Recursos\app-alerta.ico" />
+    <None Remove="Recursos\simbolo-256.png" />
+    <Resource Include="Recursos\simbolo-256.png" />
+    <!-- As fontes do site (Exo 2 e Montserrat, SIL OFL 1.1), em TTF estático: tools/gerar-fontes.py. -->
+    <Resource Include="Fontes\*.ttf" />
+    <Content Include="Fontes\OFL-*.txt" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TraducaoScbr.Core\TraducaoScbr.Core.csproj" />
+  </ItemGroup>
+
+</Project>
