@@ -1,0 +1,5 @@
+# Tudo em LF, inclusive no Windows, como no repositório do site.
+* text=auto eol=lf
+*.png binary
+*.ico binary
+*.msix binary
